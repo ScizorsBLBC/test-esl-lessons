@@ -1,0 +1,8 @@
+/* You can keep this file for any global styles you might need, 
+  but Material-UI's CssBaseline component already provides a great foundation
+  and ensures the background color from your theme is applied to the body.
+*/
+body {
+  /* This transition helps smooth out the theme changes. */
+  transition: background-color 0.3s ease;
+}
