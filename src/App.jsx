@@ -177,7 +177,7 @@ export default function App() {
 const Header = () => (
   <Box sx={{ textAlign: 'center', mb: 4 }}>
     <Typography variant="h3" component="h1" gutterBottom sx={{ color: 'text.secondary', fontWeight: 'bold' }}>
-      Interactive Guide to Global Business Cultures
+      Global Business Cultures
     </Typography>
     <Typography variant="h6" sx={{ color: 'text.primary' }}>
       Explore cultural dimensions, review key terms, and complete assignments.
