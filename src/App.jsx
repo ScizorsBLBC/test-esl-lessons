@@ -3,17 +3,16 @@ import { ThemeProvider, useTheme } from '@mui/material/styles';
 import {
     CssBaseline, Box, IconButton, Typography, Tabs, Tab,
     Card, CardContent, Grid, Button, Stack, Paper, Table, TableBody,
-    TableCell, TableContainer, TableHead, TableRow
+    TableCell, TableContainer, TableHead, TableRow, Tooltip as MuiTooltip
 } from '@mui/material';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import TonalityIcon from '@mui/icons-material/Tonality'; // For monochrome
-import InvertColorsIcon from '@mui/icons-material/InvertColors'; // For light monochrome
+import TonalityIcon from '@mui/icons-material/Tonality'; 
+import InvertColorsIcon from '@mui/icons-material/InvertColors'; 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { keyframes } from '@emotion/react';
-
 
 // Chart.js imports
 import {
@@ -21,62 +20,46 @@ import {
 } from 'chart.js';
 import { Bar, getElementAtEvent } from 'react-chartjs-2';
 
-import { darkTheme, artTheme, lightTheme, monochromeDarkTheme, monochromeLightTheme } from './theme';
-import { culturalData } from './culturalData';
+import { darkTheme, artTheme, lightTheme, monochromeDarkTheme, monochromeLightTheme } from './theme.js';
+import { culturalData } from './culturalData.js';
 
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
+// Helper function to convert hex to rgba
+const hexToRgba = (hex, alpha) => {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
 // Bounce animation for the scroll indicator
 const bounce = keyframes`
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-10px);
-  }
-  60% {
-    transform: translateY(-5px);
-  }
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
 `;
 
-// A new, smarter global scroll indicator component
+// Global scroll indicator component
 const GlobalScrollIndicator = () => {
     const [showDownArrow, setShowDownArrow] = useState(false);
     const [showUpArrow, setShowUpArrow] = useState(false);
 
     useEffect(() => {
-        const checkScrollability = () => {
-            setTimeout(() => {
-                const isScrollable = document.documentElement.scrollHeight > document.documentElement.clientHeight;
-                const isAtBottom = (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 20;
-                const isAtTop = window.scrollY < 20;
-
-                setShowDownArrow(isScrollable && !isAtBottom);
-                setShowUpArrow(isScrollable && !isAtTop);
-            }, 150);
+        const checkScroll = () => {
+            const isScrollable = document.documentElement.scrollHeight > window.innerHeight;
+            setShowUpArrow(window.scrollY > 30);
+            setShowDownArrow(isScrollable && window.innerHeight + window.scrollY < document.documentElement.scrollHeight - 30);
         };
-
-        const handleScroll = () => {
-            const isAtBottom = (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 20;
-            const isAtTop = window.scrollY < 20;
-            const isScrollable = document.documentElement.scrollHeight > document.documentElement.clientHeight;
-
-            setShowDownArrow(isScrollable && !isAtBottom);
-            setShowUpArrow(isScrollable && !isAtTop);
-        };
-
-        const observer = new MutationObserver(checkScrollability);
-        observer.observe(document.body, { childList: true, subtree: true, characterData: true });
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        window.addEventListener('resize', checkScrollability);
-
-        checkScrollability();
-
+        const observer = new MutationObserver(checkScroll);
+        observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+        window.addEventListener('scroll', checkScroll, { passive: true });
+        window.addEventListener('resize', checkScroll);
+        checkScroll(); // Initial check
         return () => {
-            window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize', checkScrollability);
+            window.removeEventListener('scroll', checkScroll);
+            window.removeEventListener('resize', checkScroll);
             observer.disconnect();
         };
     }, []);
@@ -84,34 +67,12 @@ const GlobalScrollIndicator = () => {
     return (
         <>
             {showDownArrow && (
-                <Box
-                    sx={{
-                        position: 'fixed',
-                        bottom: 24,
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        color: 'secondary.main',
-                        animation: `${bounce} 2s infinite`,
-                        zIndex: 1400,
-                        pointerEvents: 'none',
-                    }}
-                >
+                <Box sx={{ position: 'fixed', bottom: 24, left: '50%', transform: 'translateX(-50%)', color: 'secondary.main', animation: `${bounce} 2s infinite`, zIndex: 1400, pointerEvents: 'none' }}>
                     <KeyboardArrowDownIcon fontSize="large" />
                 </Box>
             )}
             {showUpArrow && (
-                 <Box
-                    sx={{
-                        position: 'fixed',
-                        top: 80, // Positioned below the header
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        color: 'secondary.main',
-                        animation: `${bounce} 2s infinite reverse`, // Reverse animation for up arrow
-                        zIndex: 1400,
-                        pointerEvents: 'none',
-                    }}
-                >
+                 <Box sx={{ position: 'fixed', top: 80, left: '50%', transform: 'translateX(-50%)', color: 'secondary.main', animation: `${bounce} 2s infinite reverse`, zIndex: 1400, pointerEvents: 'none' }}>
                     <KeyboardArrowUpIcon fontSize="large" />
                 </Box>
             )}
@@ -143,27 +104,34 @@ export default function App() {
 
   const getNextThemeIcon = () => {
     switch (themeName) {
-      case 'dark': return <AutoAwesomeIcon />; // -> Art
-      case 'art': return <Brightness7Icon />; // -> Light
-      case 'light': return <TonalityIcon />; // -> Monochrome Dark
-      case 'monochromeDark': return <InvertColorsIcon />; // -> Monochrome Light
-      case 'monochromeLight': return <Brightness4Icon />; // -> Dark
-      default: return null;
+      case 'dark': return { icon: <AutoAwesomeIcon />, title: "Switch to Art Theme" };
+      case 'art': return { icon: <Brightness7Icon />, title: "Switch to Light Theme" };
+      case 'light': return { icon: <TonalityIcon />, title: "Switch to Monochrome Dark Theme" };
+      case 'monochromeDark': return { icon: <InvertColorsIcon />, title: "Switch to Monochrome Light Theme" };
+      case 'monochromeLight': return { icon: <Brightness4Icon />, title: "Switch to Dark Theme" };
+      default: return { icon: null, title: ''};
     }
   };
+  
+  const { icon, title } = getNextThemeIcon();
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <IconButton
-        onClick={toggleTheme}
-        color="inherit"
-        sx={{ position: 'fixed', top: 16, right: 16, zIndex: 1300 }}
-      >
-        {getNextThemeIcon()}
-      </IconButton>
+      <MuiTooltip title={title} arrow>
+        <IconButton
+          onClick={toggleTheme}
+          color="inherit"
+          sx={{ 
+              position: 'fixed', top: 16, right: 16, zIndex: 1300,
+              transition: 'transform 0.2s ease-in-out, filter 0.2s ease-in-out',
+              '&:hover': { transform: 'scale(1.15)', filter: 'brightness(1.2)' }
+          }}
+        >
+          {icon}
+        </IconButton>
+      </MuiTooltip>
 
-      {/* Replaced Container with Box for true full-width capability */}
       <Box sx={{ py: 4, px: { xs: 2, sm: 4, md: 6 } }}>
         <Header />
         <MainContent />
@@ -188,15 +156,9 @@ const Header = () => (
 // Main Content Area with Navigation
 const MainContent = () => {
     const [activeTab, setActiveTab] = useState(0);
+    const handleTabChange = (event, newValue) => setActiveTab(newValue);
 
-    const handleTabChange = (event, newValue) => {
-        setActiveTab(newValue);
-    };
-
-    const sections = [
-        "Communication", "Power & Hierarchy", "Time & Scheduling", "Social Etiquette",
-        "Cultural DNA", "Key Vocabulary", "Homework"
-    ];
+    const sections = ["Communication", "Power & Hierarchy", "Time & Scheduling", "Social Etiquette", "Cultural DNA", "Key Vocabulary", "Homework"];
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -204,30 +166,29 @@ const MainContent = () => {
                 <Tabs
                     value={activeTab}
                     onChange={handleTabChange}
-                    variant="scrollable"
-                    scrollButtons="auto"
-                    allowScrollButtonsMobile
+                    variant="scrollable" scrollButtons="auto" allowScrollButtonsMobile
                     aria-label="cultural sections tabs"
-                    // Elegant styling for the scroll buttons and indicator
                     sx={{
-                        '& .MuiTabs-indicator': {
-                            backgroundColor: 'secondary.main',
+                        '& .MuiTabs-indicator': { backgroundColor: 'secondary.main' },
+                        '& .MuiTab-root': {
+                             transition: 'transform 0.2s ease-in-out, filter 0.2s ease-in-out',
+                             '&:hover': { transform: 'scale(1.05)', filter: 'brightness(1.2)' }
                         },
-                        '& .MuiTab-root.Mui-selected': {
-                            color: 'secondary.main',
-                        },
-                        '& .MuiTabScrollButton-root': {
-                            color: 'secondary.main',
-                        },
+                        '& .MuiTab-root.Mui-selected': { color: 'secondary.main' },
+                        '& .MuiTabScrollButton-root': { color: 'secondary.main' },
                     }}
                 >
-                    {sections.map(label => <Tab label={label} key={label} />)}
+                    {sections.map(label => (
+                        <MuiTooltip title={`View ${label} Section`} key={label} arrow>
+                            <Tab label={label} />
+                        </MuiTooltip>
+                    ))}
                 </Tabs>
             </Box>
             
-            {activeTab === 0 && <ChartSection sectionKey="communication" title="The Spectrum of Communication" description="This section explores the spectrum from direct, low-context communication to indirect, high-context styles..." axisLabels={{ min: 'Low-Context', max: 'High-Context' }} />}
-            {activeTab === 1 && <ChartSection sectionKey="power" title="Power, Deference, and Decisions" description="Discover how power is structured and perceived, from flat, egalitarian models to steep, hierarchical ones..." axisLabels={{ min: 'Egalitarian', max: 'Hierarchical' }} />}
-            {activeTab === 2 && <ChartSection sectionKey="time" title="The Culture of Time" description="Learn about the different rhythms of global business, from linear and sequential (monochronic) to fluid and simultaneous (polychronic) approaches to time." axisLabels={{ min: 'Monochronic', max: 'Polychronic' }} tables={[culturalData.workLifeBalance]} />}
+            {activeTab === 0 && <ChartSection sectionKey="communication" title="The Spectrum of Communication" description="This section explores the spectrum from direct, low-context communication to indirect, high-context styles..."/>}
+            {activeTab === 1 && <ChartSection sectionKey="power" title="Power, Deference, and Decisions" description="Discover how power is structured and perceived, from flat, egalitarian models to steep, hierarchical ones..."/>}
+            {activeTab === 2 && <ChartSection sectionKey="time" title="The Culture of Time" description="Learn about the different rhythms of global business, from linear and sequential (monochronic) to fluid and simultaneous (polychronic) approaches to time." tables={[culturalData.workLifeBalance]} />}
             {activeTab === 3 && <SelectorSection sectionKey="etiquette" title="The Art of the Relationship" description="Master the practical social skills for business settings across the globe." detailRenderer={etiquetteDetailRenderer} />}
             {activeTab === 4 && <SelectorSection sectionKey="dna" title="The Nation's Soul" description="Connect business practices to a country's deeper cultural DNA." detailRenderer={dnaDetailRenderer} tables={[culturalData.corePhilosophies, culturalData.artAndCulture]} />}
             {activeTab === 5 && <SelectorSection sectionKey="vocabulary" title="Key Vocabulary" description="Review the specialized terms and concepts for each topic." detailRenderer={vocabularyDetailRenderer} />}
@@ -237,60 +198,50 @@ const MainContent = () => {
 };
 
 // Component for sections with charts
-const ChartSection = ({ sectionKey, title, description, axisLabels, tables }) => {
+const ChartSection = ({ sectionKey, title, description, tables }) => {
     const sectionData = useMemo(() => [...culturalData[sectionKey]].sort((a, b) => a.score - b.score), [sectionKey]);
     const [selectedDetails, setSelectedDetails] = useState(null);
     const theme = useTheme();
     const chartRef = useRef();
 
     useEffect(() => {
-        // When the component loads or the data changes, pre-select the details
-        // for the last item in the sorted list (which has the highest score).
-        if (sectionData.length > 0) {
-            setSelectedDetails(sectionData[sectionData.length - 1]);
-        }
+        if (sectionData.length > 0) setSelectedDetails(sectionData[sectionData.length - 1]);
     }, [sectionData]);
 
-
     const chartOptions = {
-        indexAxis: 'y',
-        maintainAspectRatio: false,
-        responsive: true,
+        indexAxis: 'y', maintainAspectRatio: false, responsive: true,
+        onHover: (event, chartElement) => event.native.target.style.cursor = chartElement[0] ? 'pointer' : 'default',
         plugins: {
             legend: { display: false },
-            tooltip: { enabled: true, bodyFont: {size: 14}, titleFont: {size: 16} }
+            tooltip: { 
+                enabled: true, bodyFont: {size: 14}, titleFont: {size: 16},
+                backgroundColor: hexToRgba(theme.palette.background.paper, 0.75),
+                borderColor: hexToRgba(theme.palette.text.primary, 0.2),
+                borderWidth: 1, titleColor: theme.palette.text.primary, bodyColor: theme.palette.text.primary, padding: 12,
+                callbacks: { label: () => ' Click for details' }
+            }
         },
         scales: {
             x: {
-                beginAtZero: true, max: 10,
-                ticks: { color: theme.palette.text.primary },
-                grid: { color: theme.palette.divider },
+                beginAtZero: true, max: 10, ticks: { color: theme.palette.text.primary }, grid: { color: theme.palette.divider },
                 title: { display: true, text: 'Spectrum', color: theme.palette.text.secondary, font: {size: 16, weight: 'bold'} }
             },
-            y: {
-                ticks: { color: theme.palette.text.primary },
-                grid: { display: false }
-            }
+            y: { ticks: { color: theme.palette.text.primary }, grid: { display: false } }
         },
     };
 
     const chartData = {
         labels: sectionData.map(item => item.name),
         datasets: [{
-            label: 'Score',
-            data: sectionData.map(item => item.score),
-            backgroundColor: theme.palette.secondary.main,
-            borderColor: theme.palette.secondary.dark,
-            borderWidth: 1,
+            label: 'Score', data: sectionData.map(item => item.score),
+            backgroundColor: theme.palette.secondary.main, borderColor: theme.palette.secondary.dark, borderWidth: 1,
+            hoverBackgroundColor: theme.palette.secondary.light, hoverBorderColor: theme.palette.secondary.dark,
         }],
     };
     
     const handleChartClick = (event) => {
         const element = getElementAtEvent(chartRef.current, event);
-        if (element.length > 0) {
-            const dataIndex = element[0].index;
-            setSelectedDetails(sectionData[dataIndex]);
-        }
+        if (element.length > 0) setSelectedDetails(sectionData[element[0].index]);
     };
 
     return (
@@ -299,7 +250,6 @@ const ChartSection = ({ sectionKey, title, description, axisLabels, tables }) =>
                 <Typography variant="h4" component="h2" gutterBottom>{title}</Typography>
                 <Typography>{description}</Typography>
             </Box>
-
             <Box sx={{ display: { xs: 'block', md: 'flex' }, gap: 4, alignItems: 'stretch' }}>
                 <Box sx={{ flexGrow: 1, minWidth: 0 }}>
                     <Paper sx={{ height: { xs: '60vh', md: '70vh' }, p: 2 }}>
@@ -307,14 +257,11 @@ const ChartSection = ({ sectionKey, title, description, axisLabels, tables }) =>
                     </Paper>
                 </Box>
                 <Box sx={{ width: { xs: '100%', md: 350 }, mt: { xs: 4, md: 0 }, flexShrink: 0 }}>
-                     <DetailCard content={selectedDetails ? selectedDetails.details : '<p>Select a country from the chart to view details.</p>'} />
+                     <DetailCard content={selectedDetails ? selectedDetails.details : 'Select a country to view details.'} />
                 </Box>
             </Box>
-
             {tables && tables.map((tableData, index) => (
-                <Box sx={{ mt: 4 }} key={index}>
-                    <CustomTable tableData={tableData} />
-                </Box>
+                <Box sx={{ mt: 4 }} key={index}> <CustomTable tableData={tableData} /> </Box>
             ))}
         </Box>
     );
@@ -325,7 +272,6 @@ const SelectorSection = ({ sectionKey, title, description, detailRenderer, table
     const sectionData = culturalData[sectionKey];
     const dataKey = sectionKey === 'vocabulary' ? 'topic' : 'name';
     const sortedData = useMemo(() => [...sectionData].sort((a, b) => (a[dataKey] || a.title).localeCompare(b[dataKey] || b.title)), [sectionData, dataKey]);
-
     const [selectedItem, setSelectedItem] = useState(sortedData[0]);
 
     return (
@@ -339,13 +285,18 @@ const SelectorSection = ({ sectionKey, title, description, detailRenderer, table
             <Grid item xs={12}>
                 <Stack direction="row" spacing={2} justifyContent="center" flexWrap="wrap" useFlexGap>
                     {sortedData.map(item => (
-                        <Button
-                            key={item.title || item.topic || item.name}
-                            variant={selectedItem === item ? 'contained' : 'outlined'}
-                            onClick={() => setSelectedItem(item)}
-                        >
-                            {sectionKey === 'dna' ? item.name : (item.title || item.topic || item.name)}
-                        </Button>
+                         <MuiTooltip title={`View details for ${item.title || item.topic || item.name}`} key={item.title || item.topic || item.name} arrow>
+                            <Button
+                                variant={selectedItem === item ? 'contained' : 'outlined'}
+                                onClick={() => setSelectedItem(item)}
+                                sx={{
+                                    transition: 'transform 0.2s ease-in-out, filter 0.2s ease-in-out',
+                                    '&:hover': { transform: 'scale(1.05)', filter: 'brightness(1.1)' }
+                                }}
+                            >
+                                {sectionKey === 'dna' ? item.name : (item.title || item.topic || item.name)}
+                            </Button>
+                        </MuiTooltip>
                     ))}
                 </Stack>
             </Grid>
@@ -353,38 +304,30 @@ const SelectorSection = ({ sectionKey, title, description, detailRenderer, table
                  <DetailCard content={detailRenderer(selectedItem)} />
             </Grid>
             {tables && tables.map((tableData, index) => (
-                <Grid item xs={12} key={index}>
-                    <CustomTable tableData={tableData} />
-                </Grid>
+                <Grid item xs={12} key={index}> <CustomTable tableData={tableData} /> </Grid>
             ))}
         </Grid>
     );
 };
 
-
-// Reusable Detail Card (now simplified, without scroll logic)
-const DetailCard = ({ content }) => {
-    return (
-        <Paper sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-            <Card sx={{ flex: 1, overflowY: 'auto' }}>
-                <CardContent>
-                    <Typography variant="body1" component="div" dangerouslySetInnerHTML={{ __html: content }} 
-                        sx={{
-                            // Theme-aware styling for the homework email blocks
-                            '.homework-email': {
-                                backgroundColor: (theme) => theme.palette.action.hover,
-                                borderLeft: (theme) => `4px solid ${theme.palette.secondary.main}`,
-                                padding: '1rem',
-                                marginTop: '1rem',
-                                color: (theme) => theme.palette.text.primary,
-                            },
-                        }}
-                    />
-                </CardContent>
-            </Card>
-        </Paper>
-    );
-};
+// Reusable Detail Card
+const DetailCard = ({ content }) => (
+    <Paper sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+        <Card sx={{ flex: 1, overflowY: 'auto' }}>
+            <CardContent>
+                <Typography variant="body1" component="div" dangerouslySetInnerHTML={{ __html: content }} 
+                    sx={{
+                        '.homework-email': {
+                            backgroundColor: (theme) => theme.palette.action.hover,
+                            borderLeft: (theme) => `4px solid ${theme.palette.secondary.main}`,
+                            padding: '1rem', marginTop: '1rem', color: (theme) => theme.palette.text.primary,
+                        },
+                    }}
+                />
+            </CardContent>
+        </Card>
+    </Paper>
+);
 
 // Reusable Table Component
 const CustomTable = ({ tableData }) => (

@@ -8,8 +8,8 @@ const hexToRgba = (hex, alpha) => {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
-// --- Base Glassmorphism Component Overrides ---
-const glassmorphismOverrides = (theme) => ({
+// --- Base Component Overrides ---
+const baseOverrides = (theme) => ({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -61,8 +61,29 @@ const glassmorphismOverrides = (theme) => ({
         },
       },
     },
+    // The definitive "Liquid Glass" style for all Material-UI tooltips
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          // UPDATED: Increased opacity to make the background less readable.
+          backgroundColor: hexToRgba(theme.palette.background.paper, 0.75),
+          border: `1px solid ${hexToRgba(theme.palette.text.primary, 0.2)}`,
+          color: theme.palette.text.primary,
+          fontSize: '0.875rem',
+          // REMOVED backdropFilter to prevent rendering issues.
+        },
+        arrow: {
+          // UPDATED: Matched the new background opacity.
+          color: hexToRgba(theme.palette.background.paper, 0.85),
+          '&:before': {
+             border: `1px solid ${hexToRgba(theme.palette.text.primary, 0.2)}`,
+          }
+        }
+      }
+    }
   },
 });
+
 
 // --- Theme Definitions ---
 
@@ -76,7 +97,7 @@ let darkTheme = createTheme({
     text: { primary: '#F5F1F8', secondary: '#FF80AB' },
   },
 });
-darkTheme = createTheme(darkTheme, glassmorphismOverrides(darkTheme));
+darkTheme = createTheme(darkTheme, baseOverrides(darkTheme));
 
 // 2. An expressive, artistic theme that directly mirrors your art.
 let artTheme = createTheme({
@@ -88,7 +109,7 @@ let artTheme = createTheme({
     text: { primary: '#FFFFFF', secondary: '#CE93D8' },
   },
 });
-artTheme = createTheme(artTheme, glassmorphismOverrides(artTheme));
+artTheme = createTheme(artTheme, baseOverrides(artTheme));
 
 // 3. A clean, professional light theme with subtle hints of color.
 let lightTheme = createTheme({
@@ -100,7 +121,7 @@ let lightTheme = createTheme({
     text: { primary: '#2C1B3E', secondary: '#8E24AA' },
   },
 });
-lightTheme = createTheme(lightTheme, glassmorphismOverrides(lightTheme));
+lightTheme = createTheme(lightTheme, baseOverrides(lightTheme));
 
 // 4. An elegant, high-contrast dark monochrome theme ("Goth Mode").
 let monochromeDarkTheme = createTheme({
@@ -112,7 +133,7 @@ let monochromeDarkTheme = createTheme({
     text: { primary: '#FFFFFF', secondary: '#E0E0E0' },
   },
 });
-monochromeDarkTheme = createTheme(monochromeDarkTheme, glassmorphismOverrides(monochromeDarkTheme));
+monochromeDarkTheme = createTheme(monochromeDarkTheme, baseOverrides(monochromeDarkTheme));
 
 // 5. A chic, Bauhaus-inspired light monochrome theme.
 let monochromeLightTheme = createTheme({
@@ -124,8 +145,7 @@ let monochromeLightTheme = createTheme({
       text: { primary: '#000000', secondary: '#424242' },
     },
 });
-monochromeLightTheme = createTheme(monochromeLightTheme, glassmorphismOverrides(monochromeLightTheme));
+monochromeLightTheme = createTheme(monochromeLightTheme, baseOverrides(monochromeLightTheme));
 
 
 export { darkTheme, artTheme, lightTheme, monochromeDarkTheme, monochromeLightTheme };
-
