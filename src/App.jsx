@@ -24,37 +24,40 @@ const themes = [
   {
     key: 'light',
     label: 'Light',
+    // Final icon color: A unique purple from its palette to avoid visual conflict.
     icon: <Brightness7Icon fontSize="small" sx={{ color: lightTheme.palette.primary.main }} />,
     theme: lightTheme,
-    preview: ['#E91E63', '#9C27B0', '#F8F7FA'] // Hotter pink, vibrant purple, and light background
+    preview: ['#E91E63', '#9C27B0', '#F8F7FA']
   },
   {
     key: 'monochromeLight',
     label: 'Monochrome Light',
-    icon: <InvertColorsOffIcon fontSize="small" sx={{ color: monochromeLightTheme.palette.primary.main }} />,
+    // A light gray to contrast with the black text and look "light"
+    icon: <InvertColorsOffIcon fontSize="small" sx={{ color: monochromeLightTheme.palette.background.default }} />,
     theme: monochromeLightTheme,
-    preview: ['#C5C5C5', '#757575', '#000000'] // A more dynamic grayscale range
+    preview: ['#C5C5C5', '#757575', '#000000']
   },
   {
     key: 'dark',
     label: 'Dark',
     icon: <Brightness4Icon fontSize="small" sx={{ color: darkTheme.palette.primary.main }} />,
     theme: darkTheme,
-    preview: ['#E91E63', '#00BCD4', '#2C1B3E'] // A strong gradient between its primary and secondary colors
+    preview: ['#E91E63', '#00BCD4', '#2C1B3E']
   },
   {
     key: 'monochromeDark',
     label: 'Monochrome Dark',
-    icon: <TonalityIcon fontSize="small" sx={{ color: monochromeDarkTheme.palette.primary.main }} />,
+    // A dark gray to contrast with the white text and look "dark"
+    icon: <TonalityIcon fontSize="small" sx={{ color: monochromeDarkTheme.palette.background.paper }} />,
     theme: monochromeDarkTheme,
-    preview: ['#5E5E5E', '#1E1E1E', '#121212'] // More depth with a strong dark grey to black transition
+    preview: ['#5E5E5E', '#1E1E1E', '#121212']
   },
   {
     key: 'vaporwave',
     label: 'VaporWave',
     icon: <AutoAwesomeIcon fontSize="small" sx={{ color: vaporwaveTheme.palette.secondary.main }} />,
     theme: vaporwaveTheme,
-    preview: ['#2E004B', '#F200FF', '#FF8A00'] // This one is already perfect!
+    preview: ['#2E004B', '#F200FF', '#FF8A00']
   },
 ];
 
@@ -110,22 +113,22 @@ function MainLayout() {
           <MenuItem
             key={themeOption.key}
             onClick={() => handleThemeChange(themeOption.key)}
-            // Apply the translucent gradient background to the entire menu item
             sx={{
-              background: `linear-gradient(90deg, ${themeOption.preview[0]}40, ${themeOption.preview[1]}10, ${themeOption.preview[2]}00)`,
+              // Conditionally apply a different gradient direction for light themes
+              background: `linear-gradient(${
+                themeOption.key === 'light' || themeOption.key === 'monochromeLight' ? '270deg' : '90deg'
+              }, ${themeOption.preview[0]}40, ${themeOption.preview[1]}10, ${themeOption.preview[2]}00)`,
               '&:hover': {
-                background: `linear-gradient(90deg, ${themeOption.preview[0]}80, ${themeOption.preview[1]}20, ${themeOption.preview[2]}00)`,
-              }
+                background: `linear-gradient(${
+                  themeOption.key === 'light' || themeOption.key === 'monochromeLight' ? '270deg' : '90deg'
+                }, ${themeOption.preview[0]}80, ${themeOption.preview[1]}20, ${themeOption.preview[2]}00)`,
+              },
             }}
           >
-            {/* The icon is now on the left, as requested */}
             <ListItemIcon sx={{ '& .MuiSvgIcon-root': { color: themeOption.icon.props.sx.color } }}>
               {themeOption.icon}
             </ListItemIcon>
-            {/* The text uses the theme's primary text color for readability */}
-            <ListItemText
-              sx={{ color: themeOption.theme.palette.text.primary }}
-            >
+            <ListItemText sx={{ color: themeOption.theme.palette.text.primary }}>
               {themeOption.label}
             </ListItemText>
           </MenuItem>
