@@ -26,7 +26,7 @@ Key visual elements include:
 
     - Dark & Light: Sophisticated, high-contrast themes for classic readability.
 
-    - Art Mode: An expressive theme that directly mirrors the colors of the inspirational artwork.
+    - VaporWave Mode: An expressive theme that directly mirrors the colors of the inspirational artwork with a 90's.
 
     - Monochrome Dark & Light: Chic, Bauhaus-inspired themes that focus on form and structure.
 

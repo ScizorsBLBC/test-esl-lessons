@@ -3,6 +3,18 @@
   and ensures the background color from your theme is applied to the body.
 */
 body {
+  /* Declare dark mode theme support */
+  /* Enables the browser to render the page in the user's preferred color scheme (light or dark). */
+  /* This helps with accessibility and system-level theme integration. */
+  color-scheme: light dark;
+
   /* This transition helps smooth out the theme changes. */
-  transition: background-color 0.3s ease;
+  /* Defines a smooth transition for the background-color property. */
+  /* The transition will take 0.5 seconds to complete. */
+  /* The cubic-bezier function controls the animation's timing. */
+  /* This specific curve creates an elegant and artistic feel. */
+  /* It provides a gentle ease-in (starts slowly) and a gentle ease-out (ends slowly), */
+  /* making the animation feel smooth and polished, not abrupt. */
+  /* This contributes to the 'liquid glass' effect on theme switches. */
+  transition: background-color 0.5s cubic-bezier(0.45, 0.05, 0.55, 0.95);
 }

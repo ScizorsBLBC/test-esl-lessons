@@ -43,10 +43,11 @@ const baseOverrides = (theme) => ({
         },
       },
     },
+    // ---TODO: I changed the backgroundColor: hextoRgba(theme.palette.background.paper, from 0.85 to 0.1) for the transparent drop down menu for the theme selector, there may be a better way
     MuiPaper: {
       styleOverrides: {
         root: {
-          backgroundColor: hexToRgba(theme.palette.background.paper, 0.7),
+          backgroundColor: hexToRgba(theme.palette.background.paper, 0),
           backdropFilter: 'blur(12px)',
           border: `1px solid ${hexToRgba(theme.palette.text.primary, 0.1)}`,
           boxShadow: theme.shadows[3],
@@ -74,7 +75,7 @@ const baseOverrides = (theme) => ({
         },
         arrow: {
           // UPDATED: Matched the new background opacity.
-          color: hexToRgba(theme.palette.background.paper, 0.85),
+          color: hexToRgba(theme.palette.background.paper, 0.75),
           '&:before': {
              border: `1px solid ${hexToRgba(theme.palette.text.primary, 0.2)}`,
           }
@@ -99,17 +100,40 @@ let darkTheme = createTheme({
 });
 darkTheme = createTheme(darkTheme, baseOverrides(darkTheme));
 
-// 2. An expressive, artistic theme that directly mirrors your art.
-let artTheme = createTheme({
+// 2. An expressive, artistic theme that directly mirrors your art's roots in the '80s & '90s wild VaporWave aesthetic. 
+
+let vaporwaveTheme = createTheme({
   palette: {
     mode: 'dark',
-    primary: { main: '#FF4081' }, // Hot Pink
-    secondary: { main: '#64FFDA' }, // Teal Accent
-    background: { default: '#4A148C', paper: '#6A1B9A' },
-    text: { primary: '#FFFFFF', secondary: '#CE93D8' },
+
+    // Primary: A pure, aggressive magenta that serves as the main accent.
+    primary: {
+      main: '#F200FF', // Neon Magenta
+      light: '#FF64E1', // Lighter, glowing pink for hover states and gradients
+    },
+
+    // Secondary: A vivid, electric cyan to provide a sharp, digital contrast.
+    secondary: {
+      main: '#00FFFF', // Pure Cyan
+      light: '#91FFFF', // A brighter tone for a luminous effect
+    },
+
+    // Background: A deep, moody purple that creates a rich canvas for the neon colors.
+    background: {
+      default: '#2E004B', // Deep, saturated indigo-purple
+      paper: '#4F1A7E',   // A slightly lighter, but still very dark, shade for UI elements
+    },
+
+    // Text: We'll use a new text color palette to amplify the retro aesthetic.
+    // The primary text will be a sickly, high-contrast yellow-green,
+    // reminiscent of old monitors, and the secondary text a muted pink.
+    text: {
+      primary: '#DFFF00',   // Acidic, high-visibility green-yellow
+      secondary: '#FF8A00', // A vibrant, acidic orange for a powerful, eye-catching contrast
+    },
   },
 });
-artTheme = createTheme(artTheme, baseOverrides(artTheme));
+vaporwaveTheme = createTheme(vaporwaveTheme, baseOverrides(vaporwaveTheme));
 
 // 3. A clean, professional light theme with subtle hints of color.
 let lightTheme = createTheme({
@@ -148,4 +172,4 @@ let monochromeLightTheme = createTheme({
 monochromeLightTheme = createTheme(monochromeLightTheme, baseOverrides(monochromeLightTheme));
 
 
-export { darkTheme, artTheme, lightTheme, monochromeDarkTheme, monochromeLightTheme };
+export { darkTheme, vaporwaveTheme, lightTheme, monochromeDarkTheme, monochromeLightTheme };
