@@ -6,11 +6,11 @@ Welcome to Scizors' ESL Lessons Hub, a modern, interactive web application desig
 
 This repository is structured to grow into a multi-lesson platform. The goal is to create a hub where various educational modules, such as converted PDF lessons, can be easily added and accessed as new, interactive pages. The core architecture is designed to be modular:
 
-Main App Shell (App.jsx): Provides the consistent header, navigation, and theme-switching logic for the entire platform.
+Main App Shell (`App.jsx`): Provides the consistent header, navigation, and theme-switching logic for the entire platform.
 
 Lesson Components: Each new lesson will be built as its own self-contained set of React components.
 
-Data Modules (/src/data): Lesson-specific content (text, chart data, etc.) will be kept in separate files to keep the component logic clean and maintainable.
+Data Modules (`/src/data`): Lesson-specific content (text, chart data, etc.) will be kept in separate files to keep the component logic clean and maintainable.
 
 # 🎨 Aesthetic & Theming
 
@@ -35,47 +35,63 @@ Key visual elements include:
 1. Initial Setup
 Clone the repository and install the necessary dependencies from your terminal.
 
-        npm install
+   `npm install`
 
 2. Running the Development Server
 This command starts the Vite development server, which will automatically reload in your browser as you make changes to the code.
 
-        npm run dev
+   `npm run dev`
 
 # 🌐 Deployment Workflow
 
-This site is configured for automated deployment to GitHub Pages via the custom domain: https://esl-lessons.scizors.wtf.
+This site is deployed to `GitHub Pages` and served from the custom domain:
 
-How to Update the Live Site
-For all future work, use the following professional feature branch workflow. This keeps the main branch stable and allows for code review.
+   `https://esl-lessons.scizors.wtf`.
 
-1. Create a New Branch for Your Feature
+To update the live site, follow this complete feature-branch workflow. This process keeps the `main` branch clean and ensures all changes are reviewed before deployment.
 
-        git checkout -b new-lesson-feature
+1. **Create a New Branch**
+   First, ensure your local `main` branch is up-to-date, then create your new feature branch.
 
-2. Make All Your Code Changes...
-(e.g., add new lesson components, update data files, etc.)
+   `git checkout main`
+   `git pull`
+   `git checkout -b new-lesson-feature`
 
-3. Stage and Commit Your Changes
+2.  **Make Your Code Changes**
+    Add new lessons, fix bugs, or update styles. Test your work locally using
+    
+     `npm run dev`.
 
-        git add .
-        git commit -m "feat: Add new lesson on verb tenses"
+3.  **Commit Your Changes**
+    Stage and commit your work with a clear, descriptive message.
 
-4. Push Your New Branch to GitHub
+    `git add .`
+    `git commit -m "feat: Add new lesson on verb tenses"`
 
-        git push origin new-lesson-feature
+4.  **Push Your Branch to GitHub**
+    The first time you push a new branch, you need to set its `upstream` remote.
 
-5. Open a Pull Request on GitHub
-Go to your repository on GitHub. You will see a prompt to "Compare & pull request" for the branch you just pushed. Click it.
+    `git push --set-upstream origin new-lesson-feature`
 
-What to add here: In the pull request description, briefly explain the changes you made. For example: "This PR adds the new interactive lesson for verb tenses, including the main component and its associated data file. All features are complete and ready for review before merging into the main production branch."
+5.  **Open a Pull Request on GitHub**
+    Go to your repository on GitHub. You'll see a prompt to `Compare & pull request` for your new branch. In the description, briefly explain your changes.
 
-6. Merge the Pull Request
-After reviewing your own changes (or having a collaborator review them), click the "Merge pull request" button on GitHub. This safely merges your new feature into the main branch.
+6.  **Merge the Pull Request**
+    After reviewing, click the `Merge pull request` button. This adds your work to the `main` branch.
 
-7. Deploy to Live
-Once the main branch is updated, run the deploy script from your terminal.
+7.  **Clean Up on GitHub**
+    Immediately after merging, click the `Delete branch` button that appears. This removes the now-merged branch from GitHub, keeping your project tidy.
 
-        npm run deploy
+8.  **Sync and Deploy from Your Computer**
+    Switch back to your local `main` branch, pull the newly merged code from GitHub, and then run the deploy script.
 
-Note: Changes may take 1-5 minutes to appear on the live site. Always perform a hard refresh (Cmd+Shift+R or Ctrl+Shift+R) to bypass your browser's cache.
+    `git checkout main`
+    `git pull`
+    `npm run deploy`
+
+9.  **Clean Up Locally**
+    Finally, keep your local machine tidy by deleting the old feature branch.
+
+    `git branch -d new-lesson-feature`
+
+**Note:** Changes may take 1-5 minutes to appear on the live site. Always perform a hard refresh (`Cmd+Shift+R` or `Ctrl+Shift+R`) to bypass your browser's cache.
