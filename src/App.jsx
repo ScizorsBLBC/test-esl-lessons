@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from 'react';
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+// Add useEffect to the React import and useNavigate to the react-router-dom import
+import React, { useState, useMemo, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Outlet, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import {
   CssBaseline, IconButton, Tooltip as MuiTooltip, Box,
@@ -20,6 +21,16 @@ import GlobalBusinessCultures from './lessons/GlobalBusinessCultures';
 // This MainLayout component contains all the shared theme logic and UI
 function MainLayout() {
   const [themeName, setThemeName] = useState('dark');
+  const navigate = useNavigate(); // Add the navigate hook
+
+  // This new useEffect hook handles the redirect logic
+  useEffect(() => {
+    const redirectPath = sessionStorage.getItem('redirect');
+    if (redirectPath) {
+      sessionStorage.removeItem('redirect'); // Clean up after use
+      navigate(redirectPath, { replace: true });
+    }
+  }, [navigate]);
 
   const theme = useMemo(() => {
     switch (themeName) {
@@ -68,7 +79,6 @@ function MainLayout() {
         </IconButton>
       </MuiTooltip>
       
-      {/* This Outlet is where React Router will render the specific page */}
       <Outlet />
     </ThemeProvider>
   );
