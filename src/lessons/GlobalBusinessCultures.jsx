@@ -296,6 +296,11 @@ const homeworkDetailRenderer = (item) => `<h3 style="font-size: 1.5em; font-weig
 // --- Main Exported Component ---
 
 export default function GlobalBusinessCultures() {
+  // Add this useEffect to set the document title
+  useEffect(() => {
+    document.title = 'Global Business Cultures | ESL Lessons';
+  }, []);
+
   return (
     <>
       <Box sx={{ py: 4, px: { xs: 2, sm: 4, md: 6 } }}>
