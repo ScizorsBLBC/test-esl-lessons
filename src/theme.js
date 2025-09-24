@@ -9,167 +9,138 @@ const hexToRgba = (hex, alpha) => {
 };
 
 // --- Base Component Overrides ---
-const baseOverrides = (theme) => ({
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        '@keyframes grain': {
-          '0%, 100%': { transform: 'translate(0, 0)' },
-          '10%': { transform: 'translate(-1%, -2%)' },
-          '20%': { transform: 'translate(1%, 2%)' },
-          '30%': { transform: 'translate(-2%, 1%)' },
-          '40%': { transform: 'translate(2%, -1%)' },
-          '50%': { transform: 'translate(-1%, 2%)' },
-          '60%': { transform: 'translate(1%, -2%)' },
-          '70%': { transform: 'translate(-2%, -1%)' },
-          '80%': { transform: 'translate(2%, 1%)' },
-          '90%': { transform: 'translate(-1%, 2%)' },
+const baseOverrides = (theme) => {
+  // Define the liquid glass style once for consistency
+  const liquidGlassStyle = {
+    backgroundColor: hexToRgba(theme.palette.background.paper, 0.1), // Lowered opacity
+    backdropFilter: 'blur(12px) saturate(180%)',
+    border: `1px solid ${hexToRgba(theme.palette.text.primary, 0.1)}`, // Lowered opacity
+    boxShadow: theme.shadows[4],
+  };
+
+  return {
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          '@keyframes grain': {
+            '0%, 100%': { transform: 'translate(0, 0)' }, '10%': { transform: 'translate(-1%, -2%)' }, '20%': { transform: 'translate(1%, 2%)' }, '30%': { transform: 'translate(-2%, 1%)' }, '40%': { transform: 'translate(2%, -1%)' }, '50%': { transform: 'translate(-1%, 2%)' }, '60%': { transform: 'translate(1%, -2%)' }, '70%': { transform: 'translate(-2%, -1%)' }, '80%': { transform: 'translate(2%, 1%)' }, '90%': { transform: 'translate(-1%, 2%)' },
+          },
+          body: {
+            minHeight: '100vh',
+            backgroundColor: theme.palette.background.default,
+            backgroundAttachment: 'fixed',
+            backgroundImage: `radial-gradient(at 0% 0%, ${hexToRgba(theme.palette.primary.main, 0.2)} 0px, transparent 50%),
+                            radial-gradient(at 98% 1%, ${hexToRgba(theme.palette.secondary.main, 0.25)} 0px, transparent 50%)`,
+            '&::after': {
+              content: '""', position: 'fixed', inset: 0, pointerEvents: 'none',
+              backgroundImage: `url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.035"/%3E%3C/svg%3E')`,
+              animation: 'grain 8s steps(10) infinite', zIndex: -1,
+            },
+          },
         },
-        body: {
-          minHeight: '100vh',
-          backgroundColor: theme.palette.background.default,
-          backgroundAttachment: 'fixed',
-          backgroundImage: `radial-gradient(at 0% 0%, ${hexToRgba(theme.palette.primary.main, 0.2)} 0px, transparent 50%),
-                          radial-gradient(at 98% 1%, ${hexToRgba(theme.palette.secondary.main, 0.25)} 0px, transparent 50%)`,
-          '&::after': {
-            content: '""',
-            position: 'fixed',
-            inset: 0,
-            pointerEvents: 'none',
-            backgroundImage: `url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.035"/%3E%3C/svg%3E')`,
-            animation: 'grain 8s steps(10) infinite',
-            zIndex: -1,
+      },
+      MuiPaper: {
+        styleOverrides: {
+          root: liquidGlassStyle,
+        },
+      },
+      MuiCard: {
+        styleOverrides: {
+          root: liquidGlassStyle,
+        },
+      },
+      MuiMenu: {
+        styleOverrides: {
+          paper: liquidGlassStyle,
+        },
+      },
+      MuiTooltip: {
+        styleOverrides: {
+          tooltip: {
+            ...liquidGlassStyle,
+            backgroundColor: hexToRgba(theme.palette.background.paper, 0), // Tooltips need to be more readable
+            color: theme.palette.text.primary,
+            fontSize: '0.875rem',
+          },
+          arrow: {
+            '&:before': {
+              ...liquidGlassStyle,
+              backgroundColor: hexToRgba(theme.palette.background.paper, 0),
+              content: '""',
+            }
+          },
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            ...liquidGlassStyle,
+            transition: 'transform 0.2s ease-in-out, background-color 0.3s ease, border-color 0.3s ease',
+            '&:hover': {
+              transform: 'scale(1.05)',
+              filter: 'brightness(1.2)'
+            },
+          },
+          outlined: {
+            backgroundColor: hexToRgba(theme.palette.primary.main, 0.1),
+            borderColor: hexToRgba(theme.palette.primary.main, 0.25),
+            '&:hover': {
+              backgroundColor: hexToRgba(theme.palette.primary.main, 0.2),
+              borderColor: hexToRgba(theme.palette.primary.main, 0.4),
+            },
+          },
+          contained: {
+            backgroundColor: hexToRgba(theme.palette.primary.main, 0.3), // Lowered opacity
+            borderColor: hexToRgba(theme.palette.primary.dark, 0.5), // Lowered opacity
+            color: theme.palette.getContrastText(theme.palette.primary.main),
+            '&:hover': {
+              backgroundColor: hexToRgba(theme.palette.primary.dark, 0.5),
+            },
+          },
+        },
+      },
+      MuiTab: {
+        styleOverrides: {
+          root: {
+            transition: 'transform 0.2s ease-in-out, filter 0.2s ease-in-out',
+            '&:hover': {
+              transform: 'scale(1.05)',
+              filter: 'brightness(1.2)'
+            },
+            '&.Mui-selected': {
+              color: theme.palette.secondary.main
+            },
+          },
+        },
+      },
+      MuiTabs: {
+        styleOverrides: {
+          indicator: {
+            backgroundColor: theme.palette.secondary.main
+          },
+          scrollButtons: {
+            color: theme.palette.secondary.main
           },
         },
       },
     },
-    // ---TODO: I changed the backgroundColor: hextoRgba(theme.palette.background.paper, from 0.85 to 0.1) for the transparent drop down menu for the theme selector, there may be a better way
-    MuiPaper: {
-      styleOverrides: {
-        root: {
-          backgroundColor: hexToRgba(theme.palette.background.paper, 0),
-          backdropFilter: 'blur(12px)',
-          border: `1px solid ${hexToRgba(theme.palette.text.primary, 0.1)}`,
-          boxShadow: theme.shadows[3],
-        },
-      },
-    },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          backgroundColor: 'transparent',
-          boxShadow: 'none',
-        },
-      },
-    },
-    // The definitive "Liquid Glass" style for all Material-UI tooltips
-    MuiTooltip: {
-      styleOverrides: {
-        tooltip: {
-          // UPDATED: Increased opacity to make the background less readable.
-          backgroundColor: hexToRgba(theme.palette.background.paper, 0.75),
-          border: `1px solid ${hexToRgba(theme.palette.text.primary, 0.2)}`,
-          color: theme.palette.text.primary,
-          fontSize: '0.875rem',
-          // REMOVED backdropFilter to prevent rendering issues.
-        },
-        arrow: {
-          // UPDATED: Matched the new background opacity.
-          color: hexToRgba(theme.palette.background.paper, 0.75),
-          '&:before': {
-             border: `1px solid ${hexToRgba(theme.palette.text.primary, 0.2)}`,
-          }
-        }
-      }
-    }
-  },
-});
-
+  };
+};
 
 // --- Theme Definitions ---
-
-// 1. A refined dark theme inspired by your artwork.
-let darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: { main: '#E91E63' }, // Vibrant Pink
-    secondary: { main: '#00BCD4' }, // Cyan Accent
-    background: { default: '#2C1B3E', paper: '#3E2A50' },
-    text: { primary: '#F5F1F8', secondary: '#FF80AB' },
-  },
-});
+let darkTheme = createTheme({ palette: { mode: 'dark', primary: { main: '#E91E63' }, secondary: { main: '#00BCD4' }, background: { default: '#2C1B3E', paper: '#3E2A50' }, text: { primary: '#F5F1F8', secondary: '#FF80AB' } } });
 darkTheme = createTheme(darkTheme, baseOverrides(darkTheme));
 
-// 2. An expressive, artistic theme that directly mirrors your art's roots in the '80s & '90s wild VaporWave aesthetic. 
-
-let vaporwaveTheme = createTheme({
-  palette: {
-    mode: 'dark',
-
-    // Primary: A pure, aggressive magenta that serves as the main accent.
-    primary: {
-      main: '#F200FF', // Neon Magenta
-      light: '#FF64E1', // Lighter, glowing pink for hover states and gradients
-    },
-
-    // Secondary: A vivid, electric cyan to provide a sharp, digital contrast.
-    secondary: {
-      main: '#00FFFF', // Pure Cyan
-      light: '#91FFFF', // A brighter tone for a luminous effect
-    },
-
-    // Background: A deep, moody purple that creates a rich canvas for the neon colors.
-    background: {
-      default: '#2E004B', // Deep, saturated indigo-purple
-      paper: '#4F1A7E',   // A slightly lighter, but still very dark, shade for UI elements
-    },
-
-    // Text: We'll use a new text color palette to amplify the retro aesthetic.
-    // The primary text will be a sickly, high-contrast yellow-green,
-    // reminiscent of old monitors, and the secondary text a muted pink.
-    text: {
-      primary: '#DFFF00',   // Acidic, high-visibility green-yellow
-      secondary: '#FF8A00', // A vibrant, acidic orange for a powerful, eye-catching contrast
-    },
-  },
-});
+let vaporwaveTheme = createTheme({ palette: { mode: 'dark', primary: { main: '#F200FF' }, secondary: { main: '#00FFFF' }, background: { default: '#2E004B', paper: '#4F1A7E' }, text: { primary: '#DFFF00', secondary: '#FF8A00' } } });
 vaporwaveTheme = createTheme(vaporwaveTheme, baseOverrides(vaporwaveTheme));
 
-// 3. A clean, professional light theme with subtle hints of color.
-let lightTheme = createTheme({
-  palette: {
-    mode: 'light',
-    primary: { main: '#9C27B0' }, // Muted Purple
-    secondary: { main: '#E91E63' }, // Muted Pink
-    background: { default: '#F8F7FA', paper: '#FFFFFF' },
-    text: { primary: '#2C1B3E', secondary: '#8E24AA' },
-  },
-});
+let lightTheme = createTheme({ palette: { mode: 'light', primary: { main: '#9C27B0' }, secondary: { main: '#E91E63' }, background: { default: '#F8F7FA', paper: '#FFFFFF' }, text: { primary: '#2C1B3E', secondary: '#8E24AA' } } });
 lightTheme = createTheme(lightTheme, baseOverrides(lightTheme));
 
-// 4. An elegant, high-contrast dark monochrome theme ("Goth Mode").
-let monochromeDarkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: { main: '#FFFFFF' }, // White for primary actions
-    secondary: { main: '#BDBDBD' }, // Grey for secondary actions
-    background: { default: '#121212', paper: '#1E1E1E' },
-    text: { primary: '#FFFFFF', secondary: '#E0E0E0' },
-  },
-});
+let monochromeDarkTheme = createTheme({ palette: { mode: 'dark', primary: { main: '#FFFFFF' }, secondary: { main: '#BDBDBD' }, background: { default: '#121212', paper: '#1E1E1E' }, text: { primary: '#FFFFFF', secondary: '#E0E0E0' } } });
 monochromeDarkTheme = createTheme(monochromeDarkTheme, baseOverrides(monochromeDarkTheme));
 
-// 5. A chic, Bauhaus-inspired light monochrome theme.
-let monochromeLightTheme = createTheme({
-    palette: {
-      mode: 'light',
-      primary: { main: '#000000' }, // Black for primary actions
-      secondary: { main: '#757575' }, // Dark grey for secondary actions
-      background: { default: '#F5F5F5', paper: '#FFFFFF' },
-      text: { primary: '#000000', secondary: '#424242' },
-    },
-});
+let monochromeLightTheme = createTheme({ palette: { mode: 'light', primary: { main: '#000000' }, secondary: { main: '#757575' }, background: { default: '#F5F5F5', paper: '#FFFFFF' }, text: { primary: '#000000', secondary: '#424242' } } });
 monochromeLightTheme = createTheme(monochromeLightTheme, baseOverrides(monochromeLightTheme));
-
 
 export { darkTheme, vaporwaveTheme, lightTheme, monochromeDarkTheme, monochromeLightTheme };
