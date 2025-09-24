@@ -19,7 +19,8 @@ import { darkTheme, vaporwaveTheme, lightTheme, monochromeDarkTheme, monochromeL
 // Import lesson components
 import GlobalBusinessCultures from './lessons/GlobalBusinessCultures';
 import EnglishVerbTenses from './lessons/EnglishVerbTenses';
-import EnglishPrepositions from './lessons/EnglishPrepositions'; // <-- NEW IMPORT
+import EnglishPrepositions from './lessons/EnglishPrepositions'; 
+import PhrasalVerbs from './lessons/PhrasalVerbs'; // <-- NEW IMPORT
 // Import the global scroll indicator component
 import GlobalScrollIndicator from './components/GlobalScrollIndicator';
 
@@ -186,7 +187,8 @@ export default function App() {
           <Route path="/" element={<SiteRoot />} />
           <Route path="/global-business-cultures" element={<GlobalBusinessCultures />} />
           <Route path="/english-verb-tenses" element={<EnglishVerbTenses />} />
-          <Route path="/english-prepositions" element={<EnglishPrepositions />} /> {/* <-- NEW ROUTE */}
+          <Route path="/english-prepositions" element={<EnglishPrepositions />} />
+          <Route path="/phrasal-verbs" element={<PhrasalVerbs />} /> {/* <-- NEW ROUTE */}
         </Route>
       </Routes>
     </BrowserRouter>
