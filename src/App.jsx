@@ -62,7 +62,13 @@ const themes = [
 ];
 
 function MainLayout() {
-  const [themeName, setThemeName] = useState('light');
+  // --- MODIFICATION 1: INITIALIZE STATE FROM LOCAL STORAGE ---
+  const [themeName, setThemeName] = useState(() => {
+    const savedTheme = localStorage.getItem('themePreference');
+    return savedTheme || 'light';
+  });
+  // -----------------------------------------------------------
+
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
@@ -79,6 +85,13 @@ function MainLayout() {
     return themes.find(t => t.key === themeName)?.theme || lightTheme;
   }, [themeName]);
 
+  // --- MODIFICATION 2: PERSIST STATE TO LOCAL STORAGE ON CHANGE ---
+  useEffect(() => {
+    localStorage.setItem('themePreference', themeName);
+  }, [themeName]);
+  // ------------------------------------------------------------------
+
+  // Existing redirect logic (important to keep)
   useEffect(() => {
     const redirectPath = sessionStorage.getItem('redirect');
     if (redirectPath) {
@@ -177,4 +190,3 @@ export default function App() {
     </BrowserRouter>
   );
 }
-
