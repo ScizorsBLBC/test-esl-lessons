@@ -19,6 +19,8 @@ import { darkTheme, vaporwaveTheme, lightTheme, monochromeDarkTheme, monochromeL
 // Import lesson components
 import GlobalBusinessCultures from './lessons/GlobalBusinessCultures';
 import EnglishVerbTenses from './lessons/EnglishVerbTenses';
+// Import the global scroll indicator component
+import GlobalScrollIndicator from './components/GlobalScrollIndicator';
 
 // --- A more organized way to manage themes ---
 const themes = [
@@ -133,6 +135,7 @@ function MainLayout() {
       </Menu>
 
       <Outlet />
+       <GlobalScrollIndicator />
     </ThemeProvider>
   );
 }
