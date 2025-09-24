@@ -16,15 +16,15 @@ import PaletteIcon from '@mui/icons-material/Palette';
 
 import { darkTheme, vaporwaveTheme, lightTheme, monochromeDarkTheme, monochromeLightTheme } from './theme.js';
 
-// Import the lesson component here to make it accessible to all parts of the file
+// Import lesson components
 import GlobalBusinessCultures from './lessons/GlobalBusinessCultures';
+import EnglishVerbTenses from './lessons/EnglishVerbTenses';
 
 // --- A more organized way to manage themes ---
 const themes = [
   {
     key: 'light',
     label: 'Light',
-    // Final icon color: A unique purple from its palette to avoid visual conflict.
     icon: <Brightness7Icon fontSize="small" sx={{ color: lightTheme.palette.primary.main }} />,
     theme: lightTheme,
     preview: ['#E91E63', '#9C27B0', '#F8F7FA']
@@ -32,7 +32,6 @@ const themes = [
   {
     key: 'monochromeLight',
     label: 'Monochrome Light',
-    // A light gray to contrast with the black text and look "light"
     icon: <InvertColorsOffIcon fontSize="small" sx={{ color: monochromeLightTheme.palette.background.default }} />,
     theme: monochromeLightTheme,
     preview: ['#C5C5C5', '#757575', '#000000']
@@ -47,7 +46,6 @@ const themes = [
   {
     key: 'monochromeDark',
     label: 'Monochrome Dark',
-    // A dark gray to contrast with the white text and look "dark"
     icon: <TonalityIcon fontSize="small" sx={{ color: monochromeDarkTheme.palette.background.paper }} />,
     theme: monochromeDarkTheme,
     preview: ['#5E5E5E', '#1E1E1E', '#121212']
@@ -114,7 +112,6 @@ function MainLayout() {
             key={themeOption.key}
             onClick={() => handleThemeChange(themeOption.key)}
             sx={{
-              // Conditionally apply a different gradient direction for light themes
               background: `linear-gradient(${
                 themeOption.key === 'light' || themeOption.key === 'monochromeLight' ? '270deg' : '90deg'
               }, ${themeOption.preview[0]}40, ${themeOption.preview[1]}10, ${themeOption.preview[2]}00)`,
@@ -140,7 +137,6 @@ function MainLayout() {
   );
 }
 
-// ... (The rest of the App.jsx file remains the same)
 function SiteRoot() {
   useEffect(() => {
     document.title = 'ESL Lesson Portal';
@@ -157,7 +153,7 @@ function SiteRoot() {
             ESL Lesson Portal
           </Typography>
           <Typography variant="h6" component="p" color="text.secondary">
-            Please use the direct link provided by Ryan C. to access your lesson.
+            Please use the direct link provided by your instructor to access your lesson.
           </Typography>
         </CardContent>
       </Card>
@@ -172,8 +168,10 @@ export default function App() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<SiteRoot />} />
           <Route path="/global-business-cultures" element={<GlobalBusinessCultures />} />
+          <Route path="/english-verb-tenses" element={<EnglishVerbTenses />} />
         </Route>
       </Routes>
     </BrowserRouter>
   );
 }
+
