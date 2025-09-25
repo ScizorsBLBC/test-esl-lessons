@@ -3,10 +3,12 @@ import {
     Box, Typography, Grid, Table, TableBody, TableCell, TableContainer,
     TableHead, TableRow, Paper
 } from '@mui/material';
-import { culturalData } from '../culturalData.js';
-import ContentSelector from '../components/ContentSelector';
-import LessonTabs from '../components/LessonTabs';
-import ChartSection from '../components/ChartSection';
+// FIX: Changed import path
+import { culturalData } from '../../data/culturalData.js';
+// FIX: Changed import paths for components
+import ContentSelector from '../../components/ContentSelector';
+import LessonTabs from '../../components/LessonTabs';
+import ChartSection from '../../components/ChartSection';
 
 // --- Helper Components (Header, CustomTable) remain the same ---
 const Header = () => (

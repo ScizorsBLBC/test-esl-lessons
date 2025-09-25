@@ -1,20 +1,59 @@
-/* You can keep this file for any global styles you might need, 
-  but Material-UI's CssBaseline component already provides a great foundation
-  and ensures the background color from your theme is applied to the body.
-*/
-body {
-  /* Declare dark mode theme support */
-  /* Enables the browser to render the page in the user's preferred color scheme (light or dark). */
-  /* This helps with accessibility and system-level theme integration. */
-  color-scheme: light dark;
+/* --- Base Setup --- */
+html, body, #root {
+  min-height: 100vh;
+}
 
-  /* This transition helps smooth out the theme changes. */
-  /* Defines a smooth transition for the background-color property. */
-  /* The transition will take 0.5 seconds to complete. */
-  /* The cubic-bezier function controls the animation's timing. */
-  /* This specific curve creates an elegant and artistic feel. */
-  /* It provides a gentle ease-in (starts slowly) and a gentle ease-out (ends slowly), */
-  /* making the animation feel smooth and polished, not abrupt. */
-  /* This contributes to the 'liquid glass' effect on theme switches. */
-  transition: background-color 0.5s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 0.8s ease; /* Smooth transition between themes */
+}
+
+/* --- Film Grain Effect --- */
+/* This pseudo-element creates the subtle, static film grain over every background */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 600 600' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-size: 250px;
+  opacity: 0.07;
+  /* The grain animation has been removed for a static effect */
+}
+
+
+/* --- YOUR CURATED Static Gradients --- */
+/* The @keyframes and animation properties have been removed. */
+
+body.theme-light {
+  background: linear-gradient(-45deg, #f8f9fa, #e9ecef, #dee2e6, #ced4da);
+  background-size: 100% 100%;
+}
+
+body.theme-monochromeLight {
+  background: linear-gradient(-45deg, #ffffff, #e8e8e8, #d1d1d1, #f5f5f5);
+  background-size: 100% 100%;
+}
+
+body.theme-dark {
+  background: linear-gradient(-45deg, #023e8a, #0077b6, #0096c7, #00b4d8, #48cae4);
+  background-size: 100% 100%;
+}
+
+body.theme-monochromeDark {
+  background: linear-gradient(-45deg, #000000, #111111, #222222, #1a1a1a);
+  background-size: 100% 100%;
+}
+
+body.theme-vaporwave {
+  background: linear-gradient(-45deg, #ff00ff, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082);
+  background-size: 100% 100%;
 }

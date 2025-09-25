@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import {
     Box, Typography, Grid
 } from '@mui/material';
-import { prepositionData } from '../prepositionData.js'; // Import the new data
-import ContentSelector from '../components/ContentSelector';
-import LessonTabs from '../components/LessonTabs';
+// FIX: Changed import path
+import { prepositionData } from '../../data/prepositionData.js';
+// FIX: Changed import paths for components
+import ContentSelector from '../../components/ContentSelector';
+import LessonTabs from '../../components/LessonTabs';
 
 // --- Reusable Header Component ---
 const Header = () => (

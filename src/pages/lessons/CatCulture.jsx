@@ -1,15 +1,13 @@
-// src/lessons/CatCulture.jsx
-
 import React, { useState, useEffect } from 'react';
 import {
     Box, Typography, Grid, Table, TableBody, TableCell, TableContainer,
     TableHead, TableRow, Paper
 } from '@mui/material';
-// FIX: Change import to use the new .jsx extension
-import { catCultureData } from '../catCultureData.jsx';
-import ContentSelector from '../components/ContentSelector';
-import LessonTabs from '../components/LessonTabs';
-import ChartSection from '../components/ChartSection'; 
+// FIX: Changed to import the renamed .js file
+import { catCultureData } from '../../data/catCultureData.js';
+import ContentSelector from '../../components/ContentSelector';
+import LessonTabs from '../../components/LessonTabs';
+import ChartSection from '../../components/ChartSection';
 
 // --- Helper Components (Header, CustomTable) ---
 const Header = () => (
@@ -44,13 +42,10 @@ const CustomTable = ({ tableData }) => (
 const MainContent = () => {
     const [activeTab, setActiveTab] = useState(0);
     const handleTabChange = (event, newValue) => setActiveTab(newValue);
-    // NEW SECTIONS
     const sections = ["Cultural Archetypes", "Feline Terminology", "Key Vocabulary", "Strategy Brief (Homework)"];
 
-    // Renderer for Cultural Archetypes and Feline Terminology (simple HTML render)
     const genericDetailRenderer = (item) => item.details;
 
-    // Renderer for Vocabulary - Reuses the structure from GlobalBusinessCultures/EnglishVerbTenses
     const vocabularyDetailRenderer = (item) => `
         <h3 style="font-size: 1.5em; font-weight: bold; margin-bottom: 1em;">Vocabulary for ${item.topic}</h3>
         <ul style="list-style-position: inside; padding-left: 0; margin: 0; display: grid; gap: 1em;">
@@ -58,7 +53,6 @@ const MainContent = () => {
         </ul>
     `;
 
-    // Renderer for Homework - Reuses the structure from GlobalBusinessCultures/EnglishVerbTenses
     const homeworkDetailRenderer = (item) => `
         <h3 style="font-size: 1.5em; font-weight: bold; margin-bottom: 1em;">${item.title} (Topic: ${item.topic})</h3>
         <div>${item.details}</div>
@@ -72,7 +66,6 @@ const MainContent = () => {
                 sections={sections}
             />
             
-            {/* Tab 0: Cultural Archetypes */}
             {activeTab === 0 && <ContentSelector 
                 sectionData={catCultureData.archetypes} 
                 title="Cultural Archetype Analysis" 
@@ -81,7 +74,6 @@ const MainContent = () => {
                 preserveOrder 
             />}
 
-            {/* Tab 1: Feline Terminology */}
             {activeTab === 1 && <ContentSelector 
                 sectionData={catCultureData.terminology} 
                 title="Feline Terminology: Color, Pattern, and Trait" 
@@ -89,7 +81,6 @@ const MainContent = () => {
                 detailRenderer={genericDetailRenderer} 
             />}
             
-            {/* Tab 2: Key Vocabulary */}
             {activeTab === 2 && <ContentSelector 
                 sectionData={catCultureData.vocabulary} 
                 title="The Language of the Feline Economy" 
@@ -97,7 +88,6 @@ const MainContent = () => {
                 detailRenderer={vocabularyDetailRenderer} 
             />}
             
-            {/* Tab 3: Strategy Brief (Homework) */}
             {activeTab === 3 && <ContentSelector 
                 sectionData={catCultureData.homework} 
                 title="The Feline Strategy Brief: Policy Advocacy" 
