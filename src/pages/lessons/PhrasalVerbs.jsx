@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import {
     Box, Typography, Grid
 } from '@mui/material';
-import { phrasalVerbData } from '../phrasalVerbData.js'; // Import the new data
-import ContentSelector from '../components/ContentSelector';
-import LessonTabs from '../components/LessonTabs';
+// FIX: Changed import path
+import { phrasalVerbData } from '../../data/phrasalVerbData.js';
+// FIX: Changed import paths for components
+import ContentSelector from '../../components/ContentSelector';
+import LessonTabs from '../../components/LessonTabs';
 
 // --- Helper Functions ---
 

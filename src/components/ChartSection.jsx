@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Box, Typography, Grid, Card, Fade } from '@mui/material';
 import {
@@ -7,14 +7,26 @@ import {
 import { Bar, getElementAtEvent } from 'react-chartjs-2';
 import DetailCard from './DetailCard';
 
-// --- Global, Reusable Chart Component ---
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 export default function ChartSection({ data, title, description, tables = [] }) {
     const theme = useTheme();
-    const reversedData = useMemo(() => [...data].reverse(), [data]);
-    const [selectedItem, setSelectedItem] = useState(reversedData[0]);
+    
+    // FIX: Ensure 'data' is always treated as an array.
+    // This handles cases where the data prop might not be an array, preventing crashes.
+    const dataArray = useMemo(() => Array.isArray(data) ? data : [], [data]);
+
+    const reversedData = useMemo(() => [...dataArray].reverse(), [dataArray]);
+    const [selectedItem, setSelectedItem] = useState(null);
     const chartRef = useRef();
+
+    // Effect to set the initial selected item once data is available
+    useEffect(() => {
+        if (reversedData.length > 0) {
+            setSelectedItem(reversedData[0]);
+        }
+    }, [reversedData]);
+
 
     const chartData = useMemo(() => ({
         labels: reversedData.map(item => item.name),
@@ -41,26 +53,17 @@ export default function ChartSection({ data, title, description, tables = [] }) 
             x: {
                 beginAtZero: true,
                 max: 10,
-                // --- MODIFICATION: Set tick colors from the theme ---
-                ticks: {
-                    color: theme.palette.text.secondary,
-                },
-                grid: {
-                    color: theme.palette.divider,
-                },
+                ticks: { color: theme.palette.text.secondary },
+                grid: { color: theme.palette.divider },
             },
             y: {
                 ticks: {
                     autoSkip: false,
-                    // --- MODIFICATION: Set tick colors from the theme ---
                     color: theme.palette.text.primary,
                 },
-                grid: {
-                    display: false,
-                },
+                grid: { display: false },
             }
         }
-    // --- MODIFICATION: Add theme to the dependency array ---
     }), [theme]);
 
     const onClick = (event) => {

@@ -3,9 +3,11 @@ import {
     Box, Typography, Grid, Table, TableBody, TableCell, TableContainer,
     TableHead, TableRow, Paper
 } from '@mui/material';
-import { verbTenseData } from '../verbTenseData.js';
-import ContentSelector from '../components/ContentSelector';
-import LessonTabs from '../components/LessonTabs'; // <-- IMPORT THE NEW GLOBAL COMPONENT
+// FIX: Changed import path
+import { verbTenseData } from '../../data/verbTenseData.js';
+// FIX: Changed import paths for components
+import ContentSelector from '../../components/ContentSelector';
+import LessonTabs from '../../components/LessonTabs';
 
 const Header = () => (
   <Box sx={{ textAlign: 'center', mb: 4 }}>
