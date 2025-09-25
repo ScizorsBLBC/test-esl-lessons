@@ -1,3 +1,5 @@
+// src/components/Layout.jsx
+
 import React, { useState, useMemo, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
@@ -14,8 +16,8 @@ import PaletteIcon from '@mui/icons-material/Palette';
 
 import { darkTheme, vaporwaveTheme, lightTheme, monochromeDarkTheme, monochromeLightTheme } from '../theme.js';
 import GlobalScrollIndicator from './GlobalScrollIndicator';
+import Footer from './Footer'; // IMPORTED FOOTER COMPONENT
 
-// --- Theme Selector Configuration with Your Curated Previews ---
 const themes = [
     { key: 'light', label: 'Light', icon: <Brightness7Icon fontSize="small" sx={{ color: lightTheme.palette.primary.main }} />, theme: lightTheme, preview: ['#E91E63', '#9C27B0', '#F8F7FA'] },
     { key: 'monochromeLight', label: 'Monochrome Light', icon: <InvertColorsOffIcon fontSize="small" sx={{ color: monochromeLightTheme.palette.text.primary }} />, theme: monochromeLightTheme, preview: ['#C5C5C5', '#757575', '#000000'] },
@@ -36,7 +38,6 @@ export default function Layout() {
     localStorage.setItem('themePreference', themeName);
   }, [themeName]);
 
-  // GitHub Pages redirect logic
   useEffect(() => {
     const redirectPath = sessionStorage.getItem('redirect');
     if (redirectPath) {
@@ -65,7 +66,6 @@ export default function Layout() {
           <MenuItem
             key={themeOption.key}
             onClick={() => handleThemeChange(themeOption.key)}
-            // Your elegant translucent gradient preview is restored here
             sx={{
               background: `linear-gradient(${
                 themeOption.key.includes('light') ? '270deg' : '90deg'
@@ -87,9 +87,20 @@ export default function Layout() {
         ))}
       </Menu>
 
-      <Container component="main" sx={{ pt: { xs: 8, sm: 6 }, pb: 4 }}>
-        <Outlet />
-      </Container>
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center', 
+        minHeight: '100vh',   
+      }}>
+        <Container component="main" sx={{ pt: { xs: 8, sm: 6 }, pb: 4, width: '100%', flexGrow: 1 }}>
+          <Outlet />
+        </Container>
+        
+        {/* 2. PLACE FOOTER HERE */}
+        <Footer /> 
+
+      </Box>
       
       <GlobalScrollIndicator />
     </ThemeProvider>
