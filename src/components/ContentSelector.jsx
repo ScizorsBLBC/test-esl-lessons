@@ -18,10 +18,22 @@ export default function ContentSelector({
 }) {
     const isArray = Array.isArray(sectionData);
     const dataToProcess = isArray ? sectionData : [sectionData];
-    const dataKey = dataToProcess[0]?.topic ? 'topic' : 'name';
+    
+    // --- FIX: Made dataKey detection more robust to include 'word' ---
+    const dataKey = useMemo(() => {
+        if (!dataToProcess || dataToProcess.length === 0) return 'name'; // Default fallback
+        const item = dataToProcess[0];
+        if (item.topic) return 'topic';
+        if (item.name) return 'name';
+        if (item.title) return 'title';
+        if (item.word) return 'word';
+        return 'name'; // Final fallback
+    }, [dataToProcess]);
     
     const sortedData = useMemo(() => (
-        preserveOrder ? dataToProcess : [...dataToProcess].sort((a, b) => (a[dataKey] || a.title).localeCompare(b[dataKey] || b.title))
+        preserveOrder 
+            ? dataToProcess 
+            : [...dataToProcess].sort((a, b) => (a[dataKey] || '').localeCompare(b[dataKey] || ''))
     ), [dataToProcess, dataKey, preserveOrder]);
 
     // Internal state for uncontrolled mode
@@ -42,7 +54,7 @@ export default function ContentSelector({
 
     // Effect for uncontrolled mode to update its internal state
     useEffect(() => {
-        if (!isControlled) {
+        if (!isControlled && sortedData.length > 0) {
             setInternalSelectedItem(sortedData[0]);
         }
     }, [sortedData, isControlled]);
@@ -60,14 +72,14 @@ export default function ContentSelector({
                 <Grid item xs={12} sx={{ width: '100%', maxWidth: '1100px' }}>
                     <Stack direction="row" justifyContent="center" flexWrap="wrap">
                         {sortedData.map(item => (
-                             <MuiTooltip title={`View details for ${item.title || item.topic || item.name}`} key={item.title || item.topic || item.name} arrow>
+                             <MuiTooltip title={`View details for ${item[dataKey]}`} key={item[dataKey]} arrow>
                                 <Button
                                     variant={currentItem === item ? 'contained' : 'outlined'}
                                     onClick={() => handleSelect(item)}
-                                    // --- FIX: Restored the margin style property ---
                                     sx={{ m: 1 }}
                                 >
-                                    {item.title || item.topic || item.name}
+                                    {/* --- FIX: Use the dynamic dataKey for the button label --- */}
+                                    {item[dataKey]}
                                 </Button>
                             </MuiTooltip>
                         ))}
@@ -78,7 +90,7 @@ export default function ContentSelector({
             {/* Render internal DetailCard only if NOT in controlled/hidden mode */}
             {!hideDetailView && currentItem && detailRenderer && (
               <Grid item xs={12} sx={{ width: '100%', maxWidth: '1100px', flexGrow: 1 }}>
-                  <Fade in={!!currentItem} key={currentItem ? currentItem.title || currentItem.topic || currentItem.name : 'empty'}>
+                  <Fade in={!!currentItem} key={currentItem ? currentItem[dataKey] : 'empty'}>
                       <Box sx={{ minHeight: 400, height: '100%' }}>
                           <DetailCard content={detailRenderer(currentItem)} />
                       </Box>

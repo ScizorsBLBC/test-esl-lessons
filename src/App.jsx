@@ -1,3 +1,4 @@
+// src/App.jsx
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
@@ -8,14 +9,15 @@ import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
+import DashboardPage from './pages/DashboardPage';
+import NewsArticlePage from './pages/lessons/NewsArticlePage';
+import VocabularyPage from './pages/lessons/VocabularyPage';
+import IdiomPage from './pages/lessons/IdiomPage';
 
-// Import All Lessons
-import PronunciationPage from './pages/lessons/PronunciationPage';
-import GlobalBusinessCultures from './pages/lessons/GlobalBusinessCultures';
-import EnglishVerbTenses from './pages/lessons/EnglishVerbTenses';
-import EnglishPrepositions from './pages/lessons/EnglishPrepositions';
-import PhrasalVerbs from './pages/lessons/PhrasalVerbs';
-import CatCulture from './pages/lessons/CatCulture';
+// Import the lesson routes (FIX: Capitalized filename)
+import { lessonRoutes } from './LessonRoutes.jsx';
+
+const DASHBOARD_PATH = import.meta.env.VITE_DASHBOARD_PATH;
 
 export default function App() {
   return (
@@ -26,13 +28,16 @@ export default function App() {
         <Route path="about" element={<AboutPage />} />
         <Route path="contact" element={<ContactPage />} />
 
-        {/* FIX: Lesson Pages now use shorter, direct paths */}
-        <Route path="pronunciation" element={<PronunciationPage />} />
-        <Route path="global-business-cultures" element={<GlobalBusinessCultures />} />
-        <Route path="english-verb-tenses" element={<EnglishVerbTenses />} />
-        <Route path="english-prepositions" element={<EnglishPrepositions />} />
-        <Route path="phrasal-verbs" element={<PhrasalVerbs />} />
-        <Route path="cat-culture" element={<CatCulture />} />
+        {/* --- DYNAMIC ROUTES --- */}
+        <Route path={DASHBOARD_PATH} element={<DashboardPage />} />
+        <Route path="news/:slug/:level" element={<NewsArticlePage />} />
+        <Route path="vocabulary/:lessonId" element={<VocabularyPage />} />
+        <Route path="idioms/:lessonId" element={<IdiomPage />} />
+
+        {/* Dynamically generate lesson routes */}
+        {lessonRoutes.map(route => (
+            <Route key={route.path} path={route.path} element={route.component} />
+        ))}
       </Route>
     </Routes>
   );
