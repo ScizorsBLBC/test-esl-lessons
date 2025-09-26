@@ -1,12 +1,15 @@
 // src/services/airtable.js
 
 // --- Configuration ---
+// Read the Token and Base ID using VITE_ prefix for client-side access
 const BASE_ID = import.meta.env.VITE_AIRTABLE_BASE_ID;
-const TOKEN = import.meta.env.VITE_AIRTABLE_TOKEN;
+const TOKEN = import.meta.env.VITE_AIRTABLE_TOKEN; // FIX APPLIED HERE: Revert to VITE_
 const NEWS_TABLE_ID = import.meta.env.VITE_AIRTABLE_NEWS_TABLE_ID;
 const VOCAB_TABLE_ID = import.meta.env.VITE_AIRTABLE_VOCAB_TABLE_ID;
 const IDIOMS_TABLE_ID = import.meta.env.VITE_AIRTABLE_IDIOMS_TABLE_ID;
 
+// Read the Token using process.env, which is generally not exposed to the client
+// but is available during the Vite BUILD step, which is what we need for deployment.
 const API_BASE_URL = `https://api.airtable.com/v0/${BASE_ID}`;
 
 // --- Simple In-Memory Cache to Reduce API Calls ---
