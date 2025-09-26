@@ -4,7 +4,7 @@ export const pronunciationData = {
   vowels: [
     {
       title: 'The Vowel Sounds: Long "ee" vs. Short "i"',
-      sounds: 'Sounds: /iː/ (as in "seat") vs. /ɪ/ (as in "sit")',
+      sounds: '/iː/ (as in "seat") vs. /ɪ/ (as in "sit")',
       importance: "Many languages do not have two distinct \"i\" sounds like English. Differentiating between these two vowel sounds is one of the most critical steps to being understood, as it changes the meaning of many common words.",
       howTo: [
         "The English \"long ee\" (/iː/) is a tense sound, with the tongue high and forward in the mouth and lips spread, similar to a smile.",
@@ -20,7 +20,7 @@ export const pronunciationData = {
     },
     {
         title: "The /æ/ Vowel (as in 'cat')",
-        sounds: "Sound: /æ/ as in cat, black, happy",
+        sounds: "/æ/ as in cat, black, happy",
         importance: "This vowel does not exist in a large number of languages and is often replaced by an \"eh\" or \"ah\" sound, which can change the word (e.g., \"man\" vs. \"men\").",
         howTo: "Drop your jaw significantly. The tongue is low and flat in the mouth, and the corners of the lips might pull back slightly.",
         videos: [
@@ -32,7 +32,7 @@ export const pronunciationData = {
     },
     {
         title: "The /ʊ/ ('put') vs. /uː/ ('pool') Vowels",
-        sounds: "Sounds: /ʊ/ as in put, book vs. /uː/ as in pool, food",
+        sounds: "/ʊ/ as in put, book vs. /uː/ as in pool, food",
         importance: "This is similar to the \"sit/seat\" distinction. Many languages only have one \"oo\" sound, which is closer to the long, tense /uː/. The short, relaxed /ʊ/ sound is a common challenge.",
         howTo: [
             "/uː/ (long/tense): Your lips are tightly rounded, and the back of your tongue is very high.",
@@ -51,7 +51,7 @@ export const pronunciationData = {
   consonants: [
     {
         title: 'The "th" Sounds',
-        sounds: 'Sounds: Voiceless /θ/ (as in "think") and Voiced /ð/ (as in "this")',
+        sounds: 'Voiceless /θ/ (as in "think") and Voiced /ð/ (as in "this")',
         importance: 'These sounds are rare in many languages and are often replaced with more familiar sounds like /t/, /d/, or /s/. Mastering these sounds is crucial for clear and accurate American English pronunciation.',
         howTo: [
             'For both "th" sounds, the tip of the tongue should be placed lightly between the top and bottom front teeth.',
@@ -69,7 +69,7 @@ export const pronunciationData = {
     },
     {
         title: 'The /s/ and /z/ Sounds at the End of Words',
-        sounds: 'Sounds: /s/ (as in "cats") vs. /z/ (as in "dogs")',
+        sounds: '/s/ (as in "cats") vs. /z/ (as in "dogs")',
         importance: 'In English, the sound at the end of a plural noun or a third-person singular verb can be either a voiceless /s/ or a voiced /z/. Many learners tend to pronounce all of them as a voiceless /s/. This distinction affects grammatical clarity.',
         howTo: 'The key difference is voicing: for /s/, the vocal cords do not vibrate, but for /z/, they do, creating a "buzzing" sound.',
         videos: [
@@ -83,7 +83,7 @@ export const pronunciationData = {
     },
     {
         title: 'The Consonant Sounds /b/ and /v/',
-        sounds: 'Sounds: /b/ (as in "boat") vs. /v/ (as in "vote")',
+        sounds: '/b/ (as in "boat") vs. /v/ (as in "vote")',
         importance: 'Some languages do not distinguish between the /b/ and /v/ sounds, or the pronunciation is very similar. In English, the distinction is critical.',
         howTo: [
             'The /b/ sound is made by pressing both lips together and releasing a puff of air.',
@@ -99,7 +99,7 @@ export const pronunciationData = {
     },
     {
         title: 'Initial "s" Consonant Clusters',
-        sounds: 'Sounds: /s/ + consonant (e.g., in "school," "speak," "strategy")',
+        sounds: '/s/ + consonant (e.g., in "school," "speak," "strategy")',
         importance: 'Some languages do not have words that begin with an "s" followed immediately by another consonant. Learners may be tempted to add a vowel sound before the "s" to make it easier to pronounce.',
         howTo: 'It is important to practice starting the sound directly with the /s/, followed smoothly by the next consonant without adding any preceding vowel.',
         videos: [
@@ -109,7 +109,7 @@ export const pronunciationData = {
     },
     {
         title: 'The English "r" Sound',
-        sounds: 'Sound: /r/ (as in "red," "car")',
+        sounds: '/r/ (as in "red," "car")',
         importance: 'The American English "r" is very different from the "r" sound in many other languages, which may involve a tap or a trill of the tongue.',
         howTo: 'The American /r/ is produced in the back of the mouth. The tongue should be tense and pulled back, and the tip of the tongue should not tap the roof of the mouth.',
         videos: [
@@ -119,7 +119,7 @@ export const pronunciationData = {
     },
     {
         title: 'The /f/ and /v/ Sounds',
-        sounds: 'Sounds: /f/ as in face vs. /v/ as in voice',
+        sounds: '/f/ as in face vs. /v/ as in voice',
         importance: 'Many languages do not have one or both of these sounds, often substituting them with /p/ or /b/. The key is using the top teeth and bottom lip instead of both lips.',
         howTo: [
             '/f/ (voiceless): Gently place your top teeth on your bottom lip and blow air continuously. There is no vibration in your throat.',
@@ -135,7 +135,7 @@ export const pronunciationData = {
     },
     {
         title: 'The /w/ Sound',
-        sounds: 'Sound: /w/ as in we',
+        sounds: '/w/ as in we',
         importance: 'This sound is absent in many languages and is often confused with /v/. Correctly producing /w/ is crucial for words like "we," "want," and "work".',
         howTo: 'Round your lips tightly as if you are about to whistle. Your top teeth should NOT touch your bottom lip. Quickly move your lips and tongue away from this position into the next vowel sound.',
         videos: [
@@ -147,7 +147,7 @@ export const pronunciationData = {
     },
     {
         title: 'The "Dark L" Sound /ɫ/',
-        sounds: 'Sound: The /l/ sound at the end of words like feel or ball',
+        sounds: 'The /l/ sound at the end of words like feel or ball',
         importance: 'English has two types of /l/ sounds. The "light l" at the beginning of words (like lip) is common in other languages. The "dark l" /ɫ/ at the end of syllables is different and is a key feature of American English.',
         howTo: [
             'Light /l/: Touch the tip of your tongue to the ridge behind your upper front teeth.',
@@ -160,7 +160,7 @@ export const pronunciationData = {
     },
     {
         title: 'The /tʃ/ and /dʒ/ sounds',
-        sounds: 'Sounds: /tʃ/ as in church vs. /dʒ/ as in judge',
+        sounds: '/tʃ/ as in church vs. /dʒ/ as in judge',
         importance: 'The main difference between these two common sounds is voicing. Learners often devoice the /dʒ/ sound at the end of words, making "page" sound like "paich".',
         howTo: [
             '/tʃ/ (voiceless): Start with your tongue in the position for /t/, then release the air in a "sh" sound.',
@@ -177,7 +177,7 @@ export const pronunciationData = {
   rhythm: [
     {
         title: 'The Schwa Sound /ə/',
-        sounds: "Sound: The weak, neutral \"uh\" sound found in unstressed syllables, like the 'a' in about or the 'e' in taken",
+        sounds: "The weak, neutral \"uh\" sound found in unstressed syllables, like the 'a' in about or the 'e' in taken",
         importance: "This is the most common vowel sound in English and the key to its natural rhythm. Learners often pronounce unstressed syllables with a \"full\" vowel sound, which makes their speech sound unnatural and robotic.",
         howTo: "Your mouth should be completely relaxed. The tongue is in a neutral, central position. It is always short and weak.",
         videos: [
@@ -205,16 +205,41 @@ export const pronunciationData = {
   techniques: [
     {
         title: 'Improving with Shadowing and Self-Correction',
-        howTo: [
-            "Choose Short Audio Clips: Start with individual sentences or very short phrases (5-10 seconds long). The goal is to focus on a small, manageable amount of speech. You can find these in podcasts, audiobooks, or news clips.",
-            "Understand the Meaning First: Before you begin practicing, make sure you know what the sentence means and what each word means.",
-            "Listen for Sound and Rhythm: Listen to your chosen audio clip several times. Don't try to speak yet. Pay close attention to the pronunciation of each word, the rhythm and speed, the intonation (the \"music\"), and where words are linked together smoothly.",
-            "Shadow the Speaker: Now, play the audio and try to speak at the same time as the native speaker. The goal is to mimic their pronunciation, rhythm, and intonation as closely as possible in real-time. This technique helps train the muscles in your mouth to produce new sounds. Pause and rewind as much as you need.",
-            "Record, Compare, and Correct: This is the most critical step for making real progress. Record yourself saying the phrase without the original audio. Use an online tool (like searching Google for \"how to pronounce [word]\") to hear the standard pronunciation, using the slow playback option. Compare your recording word-by-word with the online model, asking yourself about vowel sounds, stress, and mouth shape. Then, re-record and refine, focusing on the specific errors you noticed. Repeat this cycle a few times.",
-            "Focus on One or Two Sounds at a Time: Don't try to perfect everything at once. Targeted practice on one or two sounds is much more effective.",
-            "Watch for Mouth Movements: When you use pronunciation resources online, pay close attention to the visual guide of how a native speaker moves their mouth and lips.",
-            "Enjoy the Process: Practice with audio clips from topics that are genuinely interesting to you to make the process more engaging and sustainable.",
-            "Aim for Clarity, Not Perfection: The goal is to develop clear and understandable American English. A slight accent is natural. Progress takes time and consistent, focused practice."
+        importance: [
+            "<li><strong>Choose Short Audio Clips:</strong> Start with individual sentences or very short phrases (5-10 seconds long). The goal is to focus on a small, manageable amount of speech. You can find these in podcasts, audiobooks, or news clips.</li>",
+
+            "<li> ‎</li>",
+
+            "<li><strong>Understand the Meaning First:</strong> Before you begin practicing, make sure you know what the sentence means and what each word means.</li>",
+
+            "<li> ‎</li>",
+
+
+            "<li><strong>Listen for Sound and Rhythm:</strong> Listen to your chosen audio clip several times. Don't try to speak yet. Pay close attention to the pronunciation of each word, the rhythm and speed, the intonation (the \"music\"), and where words are linked together smoothly.</li>",
+
+            "<li> ‎</li>",
+
+            "<li><strong>Shadow the Speaker:</strong> Now, play the audio and try to speak at the same time as the native speaker. The goal is to mimic their pronunciation, rhythm, and intonation as closely as possible in real-time. This technique helps train the muscles in your mouth to produce new sounds. Pause and rewind as much as you need.</li>",
+
+            "<li> ‎</li>",
+
+            "<li><strong>Record, Compare, and Correct:</strong> This is the most critical step for making real progress. Record yourself saying the phrase without the original audio. Use an online tool (like searching Google for \"how to pronounce 'practice' \") to hear the standard pronunciation, using the slow playback option. Compare your recording word-by-word with the online model, asking yourself about vowel sounds, stress, and mouth shape. Then, re-record and refine, focusing on the specific errors you noticed. Repeat this cycle a few times.</li>",
+
+            "<li> ‎</li>",
+
+            "<li><strong>Focus on One or Two Sounds at a Time:</strong> Don't try to perfect everything at once. Targeted practice on one or two sounds is much more effective.</li>",
+
+            "<li> ‎</li>",
+
+            "<li><strong>Watch for Mouth Movements:</strong> When you use pronunciation resources online, pay close attention to the visual guide of how a native speaker moves their mouth and lips.</li>",
+
+            "<li> ‎</li>",
+
+            "<li><strong>Enjoy the Process:</strong> Practice with audio clips from topics that are genuinely interesting to you to make the process more engaging and sustainable.</li>",
+
+            "<li> ‎</li>",
+
+            "<li><strong>Aim for Clarity, Not Perfection:</strong> The goal is to develop clear and understandable American English. A slight accent is natural. Progress takes time and consistent, focused practice.</li>"
         ],
         videos: [] // No video provided for this section, so array is empty
     }
