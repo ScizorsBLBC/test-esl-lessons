@@ -3,23 +3,7 @@ import { Box, Typography, Paper, Avatar, Button, TextField } from '@mui/material
 import ContactMailIcon from '@mui/icons-material/ContactMail';
 import SendIcon from '@mui/icons-material/Send';
 import LanguageIcon from '@mui/icons-material/Language';
-
-
-// --- Reusable Glass Button Wrapper (Remains the same) ---
-const GlassButtonWrapper = React.forwardRef(({ children, ...props }, ref) => (
-    <Paper 
-        elevation={0} 
-        ref={ref}
-        sx={{
-            p: 0,
-            backgroundColor: 'transparent', 
-            borderRadius: '10px', 
-            ...props.sx 
-        }}
-    >
-        {children}
-    </Paper>
-));
+import GlassButtonWrapper from '../components/GlassButtonWrapper'; // IMPORT a reusable component
 
 // --- Contact Form Component (Serverless Submission Ready & Styled) ---
 const ContactForm = ({ onCancel }) => {
@@ -27,15 +11,6 @@ const ContactForm = ({ onCancel }) => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   
-  const formButtonStyle = {
-    minWidth: 150,
-    mt: 2,
-    mx: 1,
-    py: 1.5,
-    borderRadius: '8px',
-  };
-  
-  // Updated with your Formspree endpoint
   const FORM_ACTION_URL = "https://formspree.io/f/xgvnvzjz"; 
 
   const handleChange = (setter) => (e) => setter(e.target.value);
@@ -44,12 +19,10 @@ const ContactForm = ({ onCancel }) => {
   const formInnerButtonStyle = {
     width: '100%',
     height: '100%',
-    // MODIFICATION: Using secondary.main for text/icon color
     color: 'secondary.main', 
     backgroundColor: 'transparent',
     '&:hover': {
         backgroundColor: (theme) => theme.palette.action.hover,
-        transform: 'scale(1.05)',
     },
   };
   
@@ -109,7 +82,6 @@ const ContactForm = ({ onCancel }) => {
               <Button
                 type="submit"
                 variant="text" 
-                // Color is inherited from formInnerButtonStyle
                 size="large"
                 startIcon={<SendIcon />}
                 sx={formInnerButtonStyle}
@@ -118,19 +90,19 @@ const ContactForm = ({ onCancel }) => {
               </Button>
           </GlassButtonWrapper>
 
-          {/* Cancel Button - Styled for height consistency and proper hover effect */}
+          {/* Cancel Button */}
           <Button
             onClick={onCancel}
             variant="text"
             size="large"
             sx={{ 
-                ...formWrapperStyle, // Match sizing
-                // MODIFICATION: Using secondary.main for Cancel button text color
+                ...formWrapperStyle,
                 color: 'text.secondary', 
                 mt: 2, 
                 mx: 1,
                 py: 1.5,
                 borderRadius: '8px',
+                transition: 'transform 0.2s ease-in-out',
                 '&:hover': { 
                     backgroundColor: (theme) => theme.palette.action.hover,
                     transform: 'scale(1.05)',
@@ -166,12 +138,10 @@ const HomePage = () => {
   const innerButtonStyle = {
     width: '100%',
     height: '100%',
-    // MODIFICATION: Using secondary.main for text/icon color
     color: 'secondary.main', 
     backgroundColor: 'transparent',
     '&:hover': { 
         backgroundColor: (theme) => theme.palette.action.hover,
-        transform: 'scale(1.05)', 
     },
   }
 
@@ -208,7 +178,6 @@ const HomePage = () => {
             <Button 
                 onClick={() => setShowContactForm(true)} // Toggle form view
                 variant="text" 
-                // Color is inherited from innerButtonStyle
                 size="large"
                 startIcon={<SendIcon />}
                 sx={innerButtonStyle}
@@ -225,7 +194,6 @@ const HomePage = () => {
                 target="_blank" 
                 rel="noopener noreferrer" 
                 variant="text"
-                // Color is inherited from innerButtonStyle
                 size="large"
                 startIcon={<LanguageIcon />} 
                 sx={innerButtonStyle}
