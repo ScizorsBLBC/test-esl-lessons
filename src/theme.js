@@ -63,6 +63,23 @@ const baseOverrides = (theme) => {
             '&:hover': { transform: 'scale(1.05)' },
           }
         }
+      },
+      MuiTooltip: {
+        styleOverrides: {
+          tooltip: {
+            ...liquidGlassStyle,
+            fontSize: '0.875rem',
+            padding: '8px 12px',
+            maxWidth: 300,
+          },
+          arrow: {
+            color: hexToRgba(theme.palette.background.paper, 0.1),
+            '&::before': {
+              border: `1px solid ${hexToRgba(theme.palette.text.primary, 0.1)}`,
+              backdropFilter: 'blur(12px) saturate(180%)',
+            }
+          }
+        }
       }
     },
   };
