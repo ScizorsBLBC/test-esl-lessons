@@ -107,10 +107,8 @@ body.theme-vaporwave {
 /* Force tooltip to use button default color, not hover color */
 div[role="tooltip"] {
   color: #E91E63 !important; /* Default to light theme button color */
-  all: initial !important; /* Reset all inherited styles */
 }
 
 div[role="tooltip"] * {
   color: #E91E63 !important;
-  all: initial !important;
 }
