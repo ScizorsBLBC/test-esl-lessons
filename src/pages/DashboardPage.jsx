@@ -1,7 +1,7 @@
 // src/pages/DashboardPage.jsx
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Paper, CircularProgress, Link, List, ListItem, ListItemText, Select, MenuItem, TextField, Button, ListItemIcon, Stack } from '@mui/material';
-import { fetchNewsFeed, getNewsList } from '../services/airtable';
+import { fetchNewsFeed, getNewsList } from '../services/api.js'; // UPDATED IMPORT
 import { vocabularyData } from '../data/vocabularyData.js';
 import { idiomData } from '../data/idiomData.js';
 import { lessonRoutes } from '../LessonRoutes.jsx';

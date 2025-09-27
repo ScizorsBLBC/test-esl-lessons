@@ -28,5 +28,5 @@ dist-ssr
 .env.local
 .env.*.local
 
-# Local Netlify folder
+## Netlify local state
 .netlify
