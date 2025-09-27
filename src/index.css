@@ -59,9 +59,9 @@ body.theme-vaporwave {
 }
 
 /* --- Tooltip Styling Override --- */
-/* Ensure tooltips use the button's HOVER color (primary.main), not default color */
+/* Ensure tooltips use the same color as footer About/Contact links (secondary) */
 .MuiTooltip-tooltip {
-  color: #9C27B0 !important; /* Light theme primary - button hover color */
+  color: var(--mui-palette-secondary-main, #E91E63) !important;
   background-color: rgba(0, 0, 0, 0.1) !important;
   backdrop-filter: blur(12px) saturate(180%) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
@@ -71,7 +71,7 @@ body.theme-vaporwave {
 }
 
 .MuiTooltip-tooltip * {
-  color: #9C27B0 !important;
+  color: var(--mui-palette-secondary-main, #E91E63) !important;
 }
 
 .MuiTooltip-arrow {
@@ -83,32 +83,32 @@ body.theme-vaporwave {
   backdrop-filter: blur(12px) saturate(180%) !important;
 }
 
-/* Theme-specific tooltip colors - using button HOVER colors */
+/* Theme-specific tooltip colors using CSS custom properties */
 .theme-dark .MuiTooltip-tooltip,
 .theme-dark .MuiTooltip-tooltip * {
-  color: #E91E63 !important; /* Dark theme primary - button hover */
+  color: var(--mui-palette-secondary-main, #00BCD4) !important;
 }
 
 .theme-vaporwave .MuiTooltip-tooltip,
 .theme-vaporwave .MuiTooltip-tooltip * {
-  color: #F200FF !important; /* Vaporwave theme primary - button hover */
+  color: var(--mui-palette-secondary-main, #00FFFF) !important;
 }
 
 .theme-monochromeLight .MuiTooltip-tooltip,
 .theme-monochromeLight .MuiTooltip-tooltip * {
-  color: #000000 !important; /* Monochrome light primary - button hover */
+  color: var(--mui-palette-secondary-main, #757575) !important;
 }
 
 .theme-monochromeDark .MuiTooltip-tooltip,
 .theme-monochromeDark .MuiTooltip-tooltip * {
-  color: #FFFFFF !important; /* Monochrome dark primary - button hover */
+  color: var(--mui-palette-secondary-main, #BDBDBD) !important;
 }
 
-/* Force tooltip to use button hover color, not default color */
+/* Force tooltip to use secondary color from theme */
 div[role="tooltip"] {
-  color: #9C27B0 !important; /* Default to light theme button hover color */
+  color: var(--mui-palette-secondary-main, #E91E63) !important;
 }
 
 div[role="tooltip"] * {
-  color: #9C27B0 !important;
+  color: var(--mui-palette-secondary-main, #E91E63) !important;
 }

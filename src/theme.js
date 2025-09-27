@@ -68,15 +68,15 @@ const baseOverrides = (theme) => {
         styleOverrides: {
           tooltip: {
             ...liquidGlassStyle,
-            fontSize: '0.875rem !important',
-            padding: '8px 12px !important',
+            fontSize: '0.875rem',
+            padding: '8px 12px',
             maxWidth: 300,
-            color: (theme) => theme.palette.secondary.main + ' !important',
-            backgroundColor: hexToRgba(theme.palette.background.paper, 0.1) + ' !important',
-            backdropFilter: 'blur(12px) saturate(180%) !important',
-            border: `1px solid ${hexToRgba(theme.palette.text.primary, 0.1)} !important`,
+            color: (theme) => theme.palette.secondary.main,
+            backgroundColor: hexToRgba(theme.palette.background.paper, 0.1),
+            backdropFilter: 'blur(12px) saturate(180%)',
+            border: `1px solid ${hexToRgba(theme.palette.text.primary, 0.1)}`,
             '& *': {
-              color: (theme) => theme.palette.secondary.main + ' !important',
+              color: (theme) => theme.palette.secondary.main,
             }
           },
           arrow: {
