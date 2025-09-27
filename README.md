@@ -4,12 +4,11 @@ Welcome to Scizors' ESL Lessons Hub, a modern, interactive web application desig
 
 # 🏛️ Project Architecture & Vision
 
-This repository is structured to grow into a multi-lesson platform. The goal is to create a hub where various educational modules can be easily added and accessed as new, interactive pages. The core architecture is designed to be modular:
+This repository is structured to grow into a multi-lesson platform. The goal is to create a hub where various educational modules can be easily added and accessed as new, interactive pages. The core architecture is designed to be modular and purely static:
 
 - **Main App Shell (`App.jsx`):** Provides the consistent layout, theme-switching logic, and routing for the entire platform.
-- **Lesson Components:** Each lesson is a self-contained set of React components located in `src/pages/lessons/`.
-- **Data Modules (`/src/data`):** Lesson-specific content (text, chart data, etc.) is kept in separate JavaScript files to keep the component logic clean and maintainable.
-- **Secure Serverless Backend:** To protect sensitive credentials, the application uses a Netlify serverless function as a proxy for all Airtable API calls. The frontend application makes requests to a local API endpoint (`/api/airtable`), and the serverless function securely adds the API token on the server before fetching data from Airtable.
+- **Lesson Components:** Each new lesson is built as its own self-contained set of React components.
+- **Data Modules (`/src/data`):** All lesson-specific content (text, chart data, news articles, etc.) is hardcoded in separate JavaScript files within this directory. This keeps the component logic clean, enhances performance, and removes external API dependencies.
 
 # 🎨 Aesthetic & Theming
 
@@ -32,17 +31,17 @@ Key visual elements include:
     `npm install`
 
 2.  **Running the Development Server**
-    This project uses the Netlify CLI to accurately simulate the production environment, running both the Vite frontend and the serverless functions locally.
+    This command starts the Vite development server, which will automatically reload in your browser as you make changes to the code.
 
     `npm run dev`
 
 # 🌐 Deployment Workflow
 
-This site is deployed to **Netlify** and served from the custom domain:
+This site is deployed to `GitHub Pages` and served from the custom domain:
 
 `https://esl-lessons.scizors.wtf`
 
-Netlify is connected directly to the GitHub repository. A new deployment is **automatically triggered** every time changes are merged into the `main` branch. The recommended workflow is as follows:
+To update the live site, follow this complete feature-branch workflow. This process keeps the `main` branch clean and ensures all changes are reviewed before deployment.
 
 1.  **Create a New Branch**
     First, ensure your local `main` branch is up-to-date, then create your new feature branch.
@@ -68,4 +67,16 @@ Netlify is connected directly to the GitHub repository. A new deployment is **au
 5.  **Open and Merge a Pull Request on GitHub**
     Go to your repository on GitHub. You'll see a prompt to `Compare & pull request` for your new branch. Open a pull request, have it reviewed, and then **merge it into `main`**.
 
-    Merging into `main` will automatically start the deployment process on Netlify. Changes are typically live within 1-3 minutes.
+6.  **Sync and Deploy from Your Computer**
+    After merging, switch back to your local `main` branch, pull the newly merged code from GitHub, and then run the deploy script.
+
+    `git checkout main`
+    `git pull`
+    `npm run deploy`
+
+7.  **Clean Up Locally**
+    After a successful deployment, keep your local machine tidy by deleting the old feature branch.
+
+    `git branch -d new-feature-branch`
+
+**Note:** Changes may take 1-5 minutes to appear on the live site. Always perform a hard refresh (`Cmd+Shift+R` or `Ctrl+Shift+R`) to bypass your browser's cache.

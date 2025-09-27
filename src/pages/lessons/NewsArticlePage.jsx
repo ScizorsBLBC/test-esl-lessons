@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, CircularProgress } from '@mui/material';
-import { getNewsArticle } from '../../services/airtable';
+import { getNewsArticle } from '../../services/api.js'; // UPDATED IMPORT
 import TwoPaneLayout from '../../components/TwoPaneLayout';
 import DetailCard from '../../components/DetailCard';
 
@@ -102,4 +102,3 @@ export default function NewsArticlePage() {
         </Box>
     );
 }
-
