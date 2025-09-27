@@ -57,3 +57,49 @@ body.theme-vaporwave {
   background: linear-gradient(-45deg, #ff00ff, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082);
   background-size: 100% 100%;
 }
+
+/* --- Tooltip Styling Override --- */
+/* Ensure tooltips use the correct colors across all themes */
+.MuiTooltip-tooltip {
+  color: #E91E63 !important; /* Light theme secondary */
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(12px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  font-size: 0.875rem !important;
+  padding: 8px 12px !important;
+  max-width: 300px !important;
+}
+
+.MuiTooltip-tooltip * {
+  color: #E91E63 !important;
+}
+
+.MuiTooltip-arrow {
+  color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.MuiTooltip-arrow::before {
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(12px) saturate(180%) !important;
+}
+
+/* Theme-specific tooltip colors */
+.theme-dark .MuiTooltip-tooltip,
+.theme-dark .MuiTooltip-tooltip * {
+  color: #00BCD4 !important; /* Dark theme secondary */
+}
+
+.theme-vaporwave .MuiTooltip-tooltip,
+.theme-vaporwave .MuiTooltip-tooltip * {
+  color: #00FFFF !important; /* Vaporwave theme secondary */
+}
+
+.theme-monochromeLight .MuiTooltip-tooltip,
+.theme-monochromeLight .MuiTooltip-tooltip * {
+  color: #757575 !important; /* Monochrome light secondary */
+}
+
+.theme-monochromeDark .MuiTooltip-tooltip,
+.theme-monochromeDark .MuiTooltip-tooltip * {
+  color: #BDBDBD !important; /* Monochrome dark secondary */
+}
