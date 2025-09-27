@@ -71,12 +71,14 @@ const baseOverrides = (theme) => {
             fontSize: '0.875rem',
             padding: '8px 12px',
             maxWidth: 300,
-            color: (theme) => theme.palette.secondary.main,
+            // This color is for the tooltip itself, but not its children.
+            color: theme.palette.secondary.main,
             backgroundColor: hexToRgba(theme.palette.background.paper, 0.1),
             backdropFilter: 'blur(12px) saturate(180%)',
             border: `1px solid ${hexToRgba(theme.palette.text.primary, 0.1)}`,
+            // This '& *' selector will force the color onto ALL child elements inside the tooltip.
             '& *': {
-              color: (theme) => theme.palette.secondary.main,
+              color: theme.palette.secondary.main,
             }
           },
           arrow: {
