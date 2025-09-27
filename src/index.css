@@ -59,9 +59,9 @@ body.theme-vaporwave {
 }
 
 /* --- Tooltip Styling Override --- */
-/* Ensure tooltips use the button's DEFAULT color (secondary.main), not hover color */
+/* Ensure tooltips use the button's HOVER color (primary.main), not default color */
 .MuiTooltip-tooltip {
-  color: #E91E63 !important; /* Light theme secondary - button default color */
+  color: #9C27B0 !important; /* Light theme primary - button hover color */
   background-color: rgba(0, 0, 0, 0.1) !important;
   backdrop-filter: blur(12px) saturate(180%) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
@@ -71,7 +71,7 @@ body.theme-vaporwave {
 }
 
 .MuiTooltip-tooltip * {
-  color: #E91E63 !important;
+  color: #9C27B0 !important;
 }
 
 .MuiTooltip-arrow {
@@ -83,32 +83,32 @@ body.theme-vaporwave {
   backdrop-filter: blur(12px) saturate(180%) !important;
 }
 
-/* Theme-specific tooltip colors - using button DEFAULT colors */
+/* Theme-specific tooltip colors - using button HOVER colors */
 .theme-dark .MuiTooltip-tooltip,
 .theme-dark .MuiTooltip-tooltip * {
-  color: #00BCD4 !important; /* Dark theme secondary - button default */
+  color: #E91E63 !important; /* Dark theme primary - button hover */
 }
 
 .theme-vaporwave .MuiTooltip-tooltip,
 .theme-vaporwave .MuiTooltip-tooltip * {
-  color: #00FFFF !important; /* Vaporwave theme secondary - button default */
+  color: #F200FF !important; /* Vaporwave theme primary - button hover */
 }
 
 .theme-monochromeLight .MuiTooltip-tooltip,
 .theme-monochromeLight .MuiTooltip-tooltip * {
-  color: #757575 !important; /* Monochrome light secondary - button default */
+  color: #000000 !important; /* Monochrome light primary - button hover */
 }
 
 .theme-monochromeDark .MuiTooltip-tooltip,
 .theme-monochromeDark .MuiTooltip-tooltip * {
-  color: #BDBDBD !important; /* Monochrome dark secondary - button default */
+  color: #FFFFFF !important; /* Monochrome dark primary - button hover */
 }
 
-/* Force tooltip to use button default color, not hover color */
+/* Force tooltip to use button hover color, not default color */
 div[role="tooltip"] {
-  color: #E91E63 !important; /* Default to light theme button color */
+  color: #9C27B0 !important; /* Default to light theme button hover color */
 }
 
 div[role="tooltip"] * {
-  color: #E91E63 !important;
+  color: #9C27B0 !important;
 }
