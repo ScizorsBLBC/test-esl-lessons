@@ -59,9 +59,9 @@ body.theme-vaporwave {
 }
 
 /* --- Tooltip Styling Override --- */
-/* Ensure tooltips use the correct colors across all themes */
+/* Ensure tooltips use the same color as the glass buttons */
 .MuiTooltip-tooltip {
-  color: #E91E63 !important; /* Light theme secondary */
+  color: inherit !important;
   background-color: rgba(0, 0, 0, 0.1) !important;
   backdrop-filter: blur(12px) saturate(180%) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
@@ -71,7 +71,7 @@ body.theme-vaporwave {
 }
 
 .MuiTooltip-tooltip * {
-  color: #E91E63 !important;
+  color: inherit !important;
 }
 
 .MuiTooltip-arrow {
@@ -83,23 +83,11 @@ body.theme-vaporwave {
   backdrop-filter: blur(12px) saturate(180%) !important;
 }
 
-/* Theme-specific tooltip colors */
-.theme-dark .MuiTooltip-tooltip,
-.theme-dark .MuiTooltip-tooltip * {
-  color: #00BCD4 !important; /* Dark theme secondary */
+/* Force tooltip to inherit color from parent context */
+div[role="tooltip"] {
+  color: inherit !important;
 }
 
-.theme-vaporwave .MuiTooltip-tooltip,
-.theme-vaporwave .MuiTooltip-tooltip * {
-  color: #00FFFF !important; /* Vaporwave theme secondary */
-}
-
-.theme-monochromeLight .MuiTooltip-tooltip,
-.theme-monochromeLight .MuiTooltip-tooltip * {
-  color: #757575 !important; /* Monochrome light secondary */
-}
-
-.theme-monochromeDark .MuiTooltip-tooltip,
-.theme-monochromeDark .MuiTooltip-tooltip * {
-  color: #BDBDBD !important; /* Monochrome dark secondary */
+div[role="tooltip"] * {
+  color: inherit !important;
 }
