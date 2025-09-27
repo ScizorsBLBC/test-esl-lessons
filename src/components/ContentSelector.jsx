@@ -79,7 +79,7 @@ export default function ContentSelector({
                                         <Button
                                             onClick={() => handleSelect(item)}
                                             sx={{
-                                                color: 'primary.contrastText',
+                                                color: (theme) => theme.palette.secondary.main,
                                                 minWidth: '120px',
                                                 transition: 'all 0.3s ease',
                                                 backgroundColor: 'transparent',
