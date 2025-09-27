@@ -59,9 +59,9 @@ body.theme-vaporwave {
 }
 
 /* --- Tooltip Styling Override --- */
-/* Ensure tooltips use the same color as the footer About/Contact links */
+/* Ensure tooltips use the button's DEFAULT color (secondary.main), not hover color */
 .MuiTooltip-tooltip {
-  color: #E91E63 !important; /* Light theme secondary - matches footer */
+  color: #E91E63 !important; /* Light theme secondary - button default color */
   background-color: rgba(0, 0, 0, 0.1) !important;
   backdrop-filter: blur(12px) saturate(180%) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
@@ -83,32 +83,34 @@ body.theme-vaporwave {
   backdrop-filter: blur(12px) saturate(180%) !important;
 }
 
-/* Theme-specific tooltip colors to match footer About/Contact links */
+/* Theme-specific tooltip colors - using button DEFAULT colors */
 .theme-dark .MuiTooltip-tooltip,
 .theme-dark .MuiTooltip-tooltip * {
-  color: #00BCD4 !important; /* Dark theme secondary */
+  color: #00BCD4 !important; /* Dark theme secondary - button default */
 }
 
 .theme-vaporwave .MuiTooltip-tooltip,
 .theme-vaporwave .MuiTooltip-tooltip * {
-  color: #00FFFF !important; /* Vaporwave theme secondary */
+  color: #00FFFF !important; /* Vaporwave theme secondary - button default */
 }
 
 .theme-monochromeLight .MuiTooltip-tooltip,
 .theme-monochromeLight .MuiTooltip-tooltip * {
-  color: #757575 !important; /* Monochrome light secondary */
+  color: #757575 !important; /* Monochrome light secondary - button default */
 }
 
 .theme-monochromeDark .MuiTooltip-tooltip,
 .theme-monochromeDark .MuiTooltip-tooltip * {
-  color: #BDBDBD !important; /* Monochrome dark secondary */
+  color: #BDBDBD !important; /* Monochrome dark secondary - button default */
 }
 
-/* Force tooltip to inherit color from parent context */
+/* Force tooltip to use button default color, not hover color */
 div[role="tooltip"] {
-  color: #E91E63 !important; /* Default to light theme */
+  color: #E91E63 !important; /* Default to light theme button color */
+  all: initial !important; /* Reset all inherited styles */
 }
 
 div[role="tooltip"] * {
   color: #E91E63 !important;
+  all: initial !important;
 }
