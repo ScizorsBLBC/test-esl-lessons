@@ -4,13 +4,12 @@ Welcome to Scizors' ESL Lessons Hub, a modern, interactive web application desig
 
 # 🏛️ Project Architecture & Vision
 
-This repository is structured to grow into a multi-lesson platform. The goal is to create a hub where various educational modules, such as converted PDF lessons, can be easily added and accessed as new, interactive pages. The core architecture is designed to be modular:
+This repository is structured to grow into a multi-lesson platform. The goal is to create a hub where various educational modules can be easily added and accessed as new, interactive pages. The core architecture is designed to be modular:
 
-Main App Shell (`App.jsx`): Provides the consistent header, navigation, and theme-switching logic for the entire platform.
-
-Lesson Components: Each new lesson will be built as its own self-contained set of React components.
-
-Data Modules (`/src/data`): Lesson-specific content (text, chart data, etc.) will be kept in separate files to keep the component logic clean and maintainable.
+- **Main App Shell (`App.jsx`):** Provides the consistent layout, theme-switching logic, and routing for the entire platform.
+- **Lesson Components:** Each lesson is a self-contained set of React components located in `src/pages/lessons/`.
+- **Data Modules (`/src/data`):** Lesson-specific content (text, chart data, etc.) is kept in separate JavaScript files to keep the component logic clean and maintainable.
+- **Secure Serverless Backend:** To protect sensitive credentials, the application uses a Netlify serverless function as a proxy for all Airtable API calls. The frontend application makes requests to a local API endpoint (`/api/airtable`), and the serverless function securely adds the API token on the server before fetching data from Airtable.
 
 # 🎨 Aesthetic & Theming
 
@@ -18,80 +17,55 @@ The visual identity of this platform is a core feature, designed to be both eleg
 
 Key visual elements include:
 
-- Glassmorphism: A "liquid glass" effect is applied to all card and paper surfaces, creating a sense of depth and modernity.
-
-- Animated Film Grain: A subtle, animated texture is layered over the entire interface to emulate the organic feel of vintage film and eliminate digital color banding.
-
-- Five Curated Themes: The application features a palette of five distinct themes, allowing users to customize their experience:
-
+- **Glassmorphism:** A "liquid glass" effect is applied to all card and paper surfaces, creating a sense of depth and modernity.
+- **Animated Film Grain:** A subtle, animated texture is layered over the entire interface to emulate the organic feel of vintage film and eliminate digital color banding.
+- **Five Curated Themes:** The application features a palette of five distinct themes, allowing users to customize their experience:
     - Dark & Light: Sophisticated, high-contrast themes for classic readability.
-
     - VaporWave Mode: An expressive theme that directly mirrors the colors of the inspirational artwork with a 90's.
-
     - Monochrome Dark & Light: Chic, Bauhaus-inspired themes that focus on form and structure.
 
 # 👩🏼‍💻 Getting Started & Development
 
-1. Initial Setup
-Clone the repository and install the necessary dependencies from your terminal.
+1.  **Initial Setup**
+    Clone the repository and install the necessary dependencies from your terminal.
 
-   `npm install`
+    `npm install`
 
-2. Running the Development Server
-This command starts the Vite development server, which will automatically reload in your browser as you make changes to the code.
+2.  **Running the Development Server**
+    This project uses the Netlify CLI to accurately simulate the production environment, running both the Vite frontend and the serverless functions locally.
 
-   `npm run dev`
+    `npm run dev`
 
 # 🌐 Deployment Workflow
 
-This site is deployed to `GitHub Pages` and served from the custom domain:
+This site is deployed to **Netlify** and served from the custom domain:
 
-   `https://esl-lessons.scizors.wtf`.
+`https://esl-lessons.scizors.wtf`
 
-To update the live site, follow this complete feature-branch workflow. This process keeps the `main` branch clean and ensures all changes are reviewed before deployment.
+Netlify is connected directly to the GitHub repository. A new deployment is **automatically triggered** every time changes are merged into the `main` branch. The recommended workflow is as follows:
 
-1. **Create a New Branch**
-   First, ensure your local `main` branch is up-to-date, then create your new feature branch.
+1.  **Create a New Branch**
+    First, ensure your local `main` branch is up-to-date, then create your new feature branch.
 
-   `git checkout main`
-   `git pull`
-   `git checkout -b new-lesson-feature`
+    `git checkout main`
+    `git pull`
+    `git checkout -b new-feature-branch`
 
 2.  **Make Your Code Changes**
-    Add new lessons, fix bugs, or update styles. Test your work locally using
-    
-     `npm run dev`.
+    Add new lessons, fix bugs, or update styles. Test your work locally using `npm run dev`.
 
 3.  **Commit Your Changes**
     Stage and commit your work with a clear, descriptive message.
 
     `git add .`
-    `git commit -m "feat: Add new lesson on verb tenses"`
+    `git commit -m "feat: Add new awesome feature"`
 
 4.  **Push Your Branch to GitHub**
-    The first time you push a new branch, you need to set its `upstream` remote.
+    Push your feature branch to the remote repository.
 
-    `git push --set-upstream origin new-lesson-feature`
+    `git push origin new-feature-branch`
 
-5.  **Open a Pull Request on GitHub**
-    Go to your repository on GitHub. You'll see a prompt to `Compare & pull request` for your new branch. In the description, briefly explain your changes.
+5.  **Open and Merge a Pull Request on GitHub**
+    Go to your repository on GitHub. You'll see a prompt to `Compare & pull request` for your new branch. Open a pull request, have it reviewed, and then **merge it into `main`**.
 
-6.  **Merge the Pull Request**
-    After reviewing, click the `Merge pull request` button. This adds your work to the `main` branch.
-
-7.  **Clean Up on GitHub**
-    Immediately after merging, click the `Delete branch` button that appears. This removes the now-merged branch from GitHub, keeping your project tidy.
-
-8.  **Sync and Deploy from Your Computer**
-    Switch back to your local `main` branch, pull the newly merged code from GitHub, and then run the deploy script.
-
-    `git checkout main`
-    `git pull`
-    `npm run deploy`
-
-9.  **Clean Up Locally**
-    Finally, keep your local machine tidy by deleting the old feature branch.
-
-    `git branch -d new-lesson-feature`
-
-**Note:** Changes may take 1-5 minutes to appear on the live site. Always perform a hard refresh (`Cmd+Shift+R` or `Ctrl+Shift+R`) to bypass your browser's cache.
+    Merging into `main` will automatically start the deployment process on Netlify. Changes are typically live within 1-3 minutes.
