@@ -71,7 +71,9 @@ const baseOverrides = (theme) => {
             fontSize: '0.875rem',
             padding: '8px 12px',
             maxWidth: 300,
-            color: (theme) => theme.palette.secondary.main,
+            color: (theme) => theme.palette.secondary.main + ' !important',
+            backgroundColor: hexToRgba(theme.palette.background.paper, 0.1) + ' !important',
+            backdropFilter: 'blur(12px) saturate(180%)',
           },
           arrow: {
             color: hexToRgba(theme.palette.background.paper, 0.1),
