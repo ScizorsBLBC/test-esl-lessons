@@ -1,22 +1,7 @@
-import React, { useState, forwardRef } from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, Paper, Button, TextField, Link } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-
-// --- Reusable Glass Button Wrapper (Remains the same) ---
-const GlassButtonWrapper = forwardRef(({ children, ...props }, ref) => (
-    <Paper 
-        elevation={0} 
-        ref={ref}
-        sx={{
-            p: 0,
-            backgroundColor: 'transparent', 
-            borderRadius: '10px', 
-            ...props.sx 
-        }}
-    >
-        {children}
-    </Paper>
-));
+import GlassButtonWrapper from '../components/GlassButtonWrapper';
 
 // --- Contact Form Content (Remains the same) ---
 const ContactFormContent = () => {
