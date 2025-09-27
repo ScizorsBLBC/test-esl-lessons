@@ -18,7 +18,6 @@ import IdiomPage from './pages/lessons/IdiomPage';
 import { lessonRoutes } from './LessonRoutes.jsx';
 
 const DASHBOARD_PATH = import.meta.env.VITE_DASHBOARD_PATH;
-
 export default function App() {
   return (
     <Routes>
