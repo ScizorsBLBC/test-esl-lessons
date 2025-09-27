@@ -57,3 +57,12 @@ body.theme-vaporwave {
   background: linear-gradient(-45deg, #ff00ff, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082);
   background-size: 100% 100%;
 }
+
+.MuiTooltip-arrow {
+  color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.MuiTooltip-arrow::before {
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(12px) saturate(180%) !important;
+}

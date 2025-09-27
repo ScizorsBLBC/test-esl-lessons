@@ -63,6 +63,32 @@ const baseOverrides = (theme) => {
             '&:hover': { transform: 'scale(1.05)' },
           }
         }
+      },
+      MuiTooltip: {
+        styleOverrides: {
+          tooltip: {
+            ...liquidGlassStyle,
+            fontSize: '0.875rem',
+            padding: '8px 12px',
+            maxWidth: 300,
+            // This color is for the tooltip itself, but not its children.
+            color: theme.palette.secondary.main,
+            backgroundColor: hexToRgba(theme.palette.background.paper, 0.1),
+            backdropFilter: 'blur(12px) saturate(180%)',
+            border: `1px solid ${hexToRgba(theme.palette.text.primary, 0.1)}`,
+            // This '& *' selector will force the color onto ALL child elements inside the tooltip.
+            '& *': {
+              color: theme.palette.secondary.main,
+            }
+          },
+          arrow: {
+            color: hexToRgba(theme.palette.background.paper, 0.1),
+            '&::before': {
+              border: `1px solid ${hexToRgba(theme.palette.text.primary, 0.1)}`,
+              backdropFilter: 'blur(12px) saturate(180%)',
+            }
+          }
+        }
       }
     },
   };
