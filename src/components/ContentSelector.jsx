@@ -79,12 +79,13 @@ export default function ContentSelector({
                                         <Button
                                             onClick={() => handleSelect(item)}
                                             sx={{
-                                                color: 'white',
+                                                color: 'primary.contrastText',
                                                 minWidth: '120px',
                                                 transition: 'all 0.3s ease',
                                                 backgroundColor: 'transparent',
                                                 '&:hover': {
-                                                    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                                                    backgroundColor: (theme) => theme.palette.action.hover,
+                                                    color: (theme) => theme.palette.primary.main,
                                                 },
                                             }}
                                         >
