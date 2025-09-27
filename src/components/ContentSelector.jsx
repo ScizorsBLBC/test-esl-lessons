@@ -81,11 +81,12 @@ export default function ContentSelector({
                                             sx={{
                                                 color: (theme) => theme.palette.secondary.main,
                                                 minWidth: '120px',
-                                                transition: 'all 0.3s ease',
+                                                transition: 'all 0.2s ease-in-out',
                                                 backgroundColor: 'transparent',
                                                 '&:hover': {
                                                     backgroundColor: (theme) => theme.palette.action.hover,
                                                     color: (theme) => theme.palette.primary.main,
+                                                    transform: 'scale(1.05)',
                                                 },
                                             }}
                                         >
