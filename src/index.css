@@ -58,57 +58,5 @@ body.theme-vaporwave {
   background-size: 100% 100%;
 }
 
-/* --- Tooltip Styling Override --- */
-/* Ensure tooltips use the same color as footer About/Contact links (secondary) */
-.MuiTooltip-tooltip {
-  color: var(--mui-palette-secondary-main, #E91E63) !important;
-  background-color: rgba(0, 0, 0, 0.1) !important;
-  backdrop-filter: blur(12px) saturate(180%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  font-size: 0.875rem !important;
-  padding: 8px 12px !important;
-  max-width: 300px !important;
-}
-
-.MuiTooltip-tooltip * {
-  color: var(--mui-palette-secondary-main, #E91E63) !important;
-}
-
-.MuiTooltip-arrow {
-  color: rgba(0, 0, 0, 0.1) !important;
-}
-
-.MuiTooltip-arrow::before {
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(12px) saturate(180%) !important;
-}
-
-/* Theme-specific tooltip colors using CSS custom properties */
-.theme-dark .MuiTooltip-tooltip,
-.theme-dark .MuiTooltip-tooltip * {
-  color: var(--mui-palette-secondary-main, #00BCD4) !important;
-}
-
-.theme-vaporwave .MuiTooltip-tooltip,
-.theme-vaporwave .MuiTooltip-tooltip * {
-  color: var(--mui-palette-secondary-main, #00FFFF) !important;
-}
-
-.theme-monochromeLight .MuiTooltip-tooltip,
-.theme-monochromeLight .MuiTooltip-tooltip * {
-  color: var(--mui-palette-secondary-main, #757575) !important;
-}
-
-.theme-monochromeDark .MuiTooltip-tooltip,
-.theme-monochromeDark .MuiTooltip-tooltip * {
-  color: var(--mui-palette-secondary-main, #BDBDBD) !important;
-}
-
-/* Force tooltip to use secondary color from theme */
-div[role="tooltip"] {
-  color: var(--mui-palette-secondary-main, #E91E63) !important;
-}
-
-div[role="tooltip"] * {
-  color: var(--mui-palette-secondary-main, #E91E63) !important;
-}
+/* Tooltip styling is now handled entirely by the theme system */
+/* No hardcoded colors - tooltips use theme.palette.secondary.main dynamically */
