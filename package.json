@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://ScizorsBLBC.github.io/ESL-Lessons",
+  "homepage": "https://esl-lessons.scizors.wtf",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
