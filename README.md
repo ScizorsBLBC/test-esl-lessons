@@ -84,14 +84,53 @@ Deployment is fully automated using **GitHub Actions**. The site is configured t
 3. **Deployment**: The contents of the `dist` folder are automatically deployed to GitHub Pages
 4. **Live Site**: The site is served at `https://esl-lessons.scizors.wtf`
 
-### Manual Deployment Steps (If Needed)
+### Complete Deployment Process
 
-If you need to trigger a deployment manually:
+#### Option 1: Feature Branch to Production (Recommended)
 
-1. **Go to GitHub Repository**: Navigate to `https://github.com/ScizorsBLBC/ESL-Lessons`
-2. **Access Actions Tab**: Click on the "Actions" tab in the repository
-3. **Find the Workflow**: Look for "Deploy to GitHub Pages" in the workflows list
-4. **Manual Trigger**: Click "Run workflow" → Select "main" branch → Click "Run workflow"
+If your changes are on a feature branch (like `button-refactor`):
+
+1. **Create Pull Request on GitHub**:
+   - Go to `https://github.com/ScizorsBLBC/ESL-Lessons`
+   - Click "Pull requests" tab
+   - Click "New pull request"
+   - Select `button-refactor` as the compare branch
+   - Select `main` as the base branch
+   - Click "Create pull request"
+
+2. **Review and Merge**:
+   - Add a descriptive title and description
+   - Request review if needed
+   - Click "Merge pull request" → "Confirm merge"
+
+3. **Automatic Deployment**:
+   - GitHub Actions automatically triggers on main branch push
+   - Monitor progress in the "Actions" tab
+   - Site updates in 2-5 minutes at `https://esl-lessons.scizors.wtf`
+
+#### Option 2: Direct Merge (Quick Development)
+
+If you're the only developer and want to deploy immediately:
+
+```bash
+# Merge feature branch into main
+git checkout main
+git merge button-refactor
+git push origin main
+
+# Wait for GitHub Actions to deploy (2-5 minutes)
+# Site will be live at https://esl-lessons.scizors.wtf
+```
+
+#### Option 3: Manual Deployment (Troubleshooting)
+
+If automatic deployment fails:
+
+1. **Go to GitHub Repository**: `https://github.com/ScizorsBLBC/ESL-Lessons`
+2. **Access Actions Tab**: Click "Actions" tab
+3. **Find Workflow**: Look for "Deploy to GitHub Pages"
+4. **Manual Trigger**: Click "Run workflow" → Select "main" → "Run workflow"
+5. **Monitor Progress**: Watch the workflow run in real-time
 
 ### Deployment Workflow Configuration
 
@@ -180,7 +219,7 @@ If the site doesn't update after a push:
 
 ### Development Workflow
 
-#### Working with Feature Branches
+#### Complete Development to Production Workflow
 
 For new features or bug fixes:
 
@@ -188,27 +227,53 @@ For new features or bug fixes:
    ```bash
    git checkout main
    git pull origin main
-   git checkout -b feature/new-lesson
+   git checkout -b feature/your-feature-name
    ```
 
 2. **Make Your Changes**:
    - Add new lesson content to `src/data/`
    - Create/update components in `src/components/`
    - Test locally with `npm run dev`
+   - Run `npm run build` to test production build
 
 3. **Commit and Push**:
    ```bash
    git add .
-   git commit -m "feat: Add new vocabulary lesson"
-   git push origin feature/new-lesson
+   git commit -m "feat: Add new feature with descriptive message"
+   git push origin feature/your-feature-name
    ```
 
 4. **Create Pull Request**:
-   - Go to GitHub repository
-   - Click "Compare & pull request"
-   - Request review and merge to main
+   - Go to `https://github.com/ScizorsBLBC/ESL-Lessons`
+   - Click "Pull requests" tab → "New pull request"
+   - Select your feature branch as "compare"
+   - Select `main` as "base"
+   - Add description and click "Create pull request"
 
-5. **Automatic Deployment**: Once merged to main, GitHub Actions will automatically rebuild and deploy
+5. **Review and Merge**:
+   - Review the changes
+   - Request code review if needed
+   - Click "Merge pull request" → "Confirm merge"
+
+6. **Automatic Deployment**:
+   - GitHub Actions automatically triggers on main branch merge
+   - Monitor in "Actions" tab
+   - Site updates in 2-5 minutes at `https://esl-lessons.scizors.wtf`
+
+#### Quick Commands Summary
+
+```bash
+# Start development
+git checkout main && git pull
+git checkout -b feature/new-feature
+npm run dev  # Test locally
+
+# Deploy to production
+git add . && git commit -m "feat: Description"
+git push origin feature/new-feature
+# Create PR on GitHub → Merge to main
+# GitHub Actions deploys automatically
+```
 
 #### Adding New Lessons
 
