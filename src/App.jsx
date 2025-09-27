@@ -17,7 +17,7 @@ import IdiomPage from './pages/lessons/IdiomPage';
 // Import the lesson routes (FIX: Capitalized filename)
 import { lessonRoutes } from './LessonRoutes.jsx';
 
-const DASHBOARD_PATH = import.meta.env.VITE_DASHBOARD_PATH;
+const DASHBOARD_PATH = import.meta.env.VITE_DASHBOARD_PATH || 'dashboard';
 export default function App() {
   return (
     <Routes>
