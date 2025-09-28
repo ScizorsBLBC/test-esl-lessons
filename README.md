@@ -417,13 +417,13 @@ This test environment uses **Netlify** for deployment with serverless functions.
 
 #### Option 1: Feature Branch to Production (Recommended)
 
-If your changes are on a feature branch (like `button-refactor`):
+If your changes are on a feature branch (like `architectural-refinement`):
 
 1. **Create Pull Request on GitHub**:
    - Go to `https://github.com/ScizorsBLBC/ESL-Lessons`
    - Click "Pull requests" tab
    - Click "New pull request"
-   - Select `button-refactor` as the compare branch
+   - Select your feature branch as the compare branch
    - Select `main` as the base branch
    - Click "Create pull request"
 
@@ -435,7 +435,7 @@ If your changes are on a feature branch (like `button-refactor`):
 3. **Automatic Deployment**:
    - GitHub Actions automatically triggers on main branch push
    - Monitor progress in the "Actions" tab
-   - Site updates in 2-5 minutes at `https://esl-lessons.scizors.wtf`
+   - Site updates in 2-5 minutes at `https://test-esl-lessons.scizors.wtf`
 
 #### Option 2: Direct Merge (Quick Development)
 
@@ -589,20 +589,6 @@ For new features or bug fixes:
    - Monitor in "Actions" tab
    - Site updates in 2-5 minutes at `https://esl-lessons.scizors.wtf`
 
-#### Quick Commands Summary
-
-```bash
-# Start development
-git checkout main && git pull
-git checkout -b feature/new-feature
-npm run dev  # Test locally
-
-# Deploy to production
-git add . && git commit -m "feat: Description"
-git push origin feature/new-feature
-# Create PR on GitHub → Merge to main
-# GitHub Actions deploys automatically
-```
 
 #### Adding New Lessons
 
