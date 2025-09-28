@@ -10,10 +10,12 @@ Welcome to the ESL Lessons Hub, a modern, interactive web application designed t
 ## Features
 
 ### 🎓 Interactive Learning Experience
-- **10 Comprehensive Lessons**: Vocabulary, idioms, verb tenses, pronunciation, cultural studies, and more
+- **Comprehensive Lessons**: Vocabulary, idioms, verb tenses, pronunciation, cultural studies, and more
+- **Interactive Exercises**: Quizzes, fill-in-the-blanks, and flashcards for active learning
+- **Text-to-Speech**: Audio playback for all lesson content with accessibility support
 - **Rich Media Integration**: YouTube videos, interactive charts, and visual learning aids
 - **Responsive Design**: Optimized for desktop, tablet, and mobile devices
-- **Accessibility**: WCAG-compliant with proper semantic HTML and ARIA labels
+- **Accessibility**: WCAG 2.1 AA compliant with proper semantic HTML and ARIA labels
 
 ### 🎨 Advanced Theming System
 - **5 Distinct Themes**: Light, Dark, Vaporwave, Monochrome Light, Monochrome Dark
@@ -26,6 +28,12 @@ Welcome to the ESL Lessons Hub, a modern, interactive web application designed t
 - **TypeScript Support**: Modern development tooling
 - **ESLint Integration**: Code quality and consistency enforcement
 - **Automated Deployment**: Zero-configuration deployment pipeline
+
+### 🔒 Security & Accessibility
+- **Backend-for-Frontend**: Secure API key management for translation services
+- **Text-to-Speech**: Web Speech API integration for inclusive learning
+- **WCAG Compliance**: Full accessibility support for screen readers and keyboard navigation
+- **Production Security**: Environment-based configuration and secure credential handling
 
 ## Core Architectural Principles
 
@@ -46,6 +54,10 @@ This project follows a strict set of principles to ensure it remains scalable, m
 - **Deployment**: GitHub Actions with GitHub Pages
 - **Version Control**: Git with feature branch workflow
 - **Code Quality**: ESLint with React and accessibility rules
+- **Backend Services**: Express.js BFF proxy server
+- **Accessibility**: Web Speech API with react-text-to-speech
+- **Translation**: DeepL API integration for content translation
+- **Interactive Components**: react-quiz-component for quiz functionality
 
 ## Getting Started
 
@@ -54,24 +66,40 @@ This project follows a strict set of principles to ensure it remains scalable, m
 -   Node.js (v20.x or later)
 -   npm
 
-### Local Development
+### Local Development Setup
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/scizorsblbc/esl-lessons.git](https://github.com/scizorsblbc/esl-lessons.git)
+    git clone https://github.com/scizorsblbc/esl-lessons.git
     cd esl-lessons
     ```
 
-2.  **Install dependencies:**
+2.  **Install frontend dependencies:**
     ```bash
     npm install
     ```
 
-3.  **Run the development server:**
+3.  **Set up the BFF server (optional, for translation features):**
+    ```bash
+    cd server
+    npm install
+    cp .env.example .env
+    # Edit .env and add your DeepL API key
+    cd ..
+    ```
+
+4.  **Run the development server:**
     ```bash
     npm run dev
     ```
     The application will be available at `http://localhost:5173`. The Vite server supports Hot Module Replacement (HMR) for a fast and efficient development experience.
+
+5.  **Start the BFF server (if using translation features):**
+    ```bash
+    cd server
+    npm start
+    ```
+    The server will run on `http://localhost:3001`.
 
 ## Deployment
 
@@ -292,6 +320,10 @@ esl-lessons/
 ├── .github/
 │   └── workflows/          # GitHub Actions workflows for automated deployment
 │       └── deploy.yml      # Main deployment workflow
+├── server/                 # Backend-for-Frontend (BFF) proxy server
+│   ├── .env.example       # Server configuration template
+│   ├── package.json       # Server dependencies
+│   └── server.js          # Express server with DeepL API proxy
 ├── public/                 # Static assets copied to build root
 │   ├── 404.html           # Custom 404 error page
 │   ├── CNAME              # Custom domain configuration
@@ -299,12 +331,17 @@ esl-lessons/
 ├── src/
 │   ├── components/         # Reusable React components
 │   │   ├── ChartSection.jsx    # Interactive chart component
+│   │   ├── ContentBlockRenderer.jsx # Dynamic content rendering
 │   │   ├── ContentSelector.jsx # Tabbed content navigation
-│   │   ├── DetailCard.jsx      # Rich text content display
+│   │   ├── DetailCard.jsx      # Rich text content with TTS
+│   │   ├── FillInTheBlanks.jsx # Interactive fill-in-the-blanks
+│   │   ├── Flashcard.jsx       # Interactive flashcard component
 │   │   ├── Footer.jsx          # Global footer component
 │   │   ├── GlassButtonWrapper.jsx # Glassmorphism button styling
 │   │   ├── Layout.jsx          # Main app layout and theme provider
+│   │   ├── LessonHeader.jsx    # Consistent lesson headers
 │   │   ├── LessonTabs.jsx      # Lesson section navigation
+│   │   ├── Quiz.jsx           # Interactive quiz component
 │   │   ├── TwoPaneLayout.jsx   # Side-by-side content layout
 │   │   ├── YouTubeEmbed.jsx    # YouTube video embed component
 │   │   └── GlobalScrollIndicator.jsx # Scroll position indicators
@@ -313,9 +350,10 @@ esl-lessons/
 │   │   ├── culturalData.js     # Cultural studies content
 │   │   ├── idiomData.js        # English idioms content
 │   │   ├── newsData.js         # News articles content
-│   │   ├── phrasalVerbData.js  # Phrasal verbs content
+│   │   ├── phrasalVerbData.js  # Phrasal verbs content (schema-compliant)
 │   │   ├── prepositionData.js  # Prepositions content
 │   │   ├── pronunciationData.js # Pronunciation guide content
+│   │   ├── schema.js           # JSON schema for lesson data
 │   │   ├── verbTenseData.js    # Verb tenses content
 │   │   └── vocabularyData.js   # Vocabulary lessons content
 │   ├── pages/              # Top-level page components
@@ -330,7 +368,7 @@ esl-lessons/
 │   │       ├── GlobalBusinessCultures.jsx # Business cultures lesson
 │   │       ├── IdiomPage.jsx           # Idioms lesson
 │   │       ├── NewsArticlePage.jsx    # News articles lesson
-│   │       ├── PhrasalVerbs.jsx       # Phrasal verbs lesson
+│   │       ├── PhrasalVerbs.jsx       # Phrasal verbs lesson (refactored)
 │   │       ├── PronunciationPage.jsx   # Pronunciation lesson
 │   │       └── VocabularyPage.jsx     # Vocabulary lesson
 │   ├── services/           # External service integrations
@@ -358,5 +396,7 @@ esl-lessons/
 - **Data Separation**: All content stored in `src/data/` files, components are pure templates
 - **Component Reusability**: Shared components in `src/components/` used across all lessons
 - **Theme System**: Five distinct themes with consistent styling
+- **Static Generation**: No server required - fully static site
+- **Automated Deployment**: GitHub Actions handles all deployment automatically
 - **Static Generation**: No server required - fully static site
 - **Automated Deployment**: GitHub Actions handles all deployment automatically
