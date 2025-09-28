@@ -6,6 +6,7 @@ import ContentSelector from '../../components/ContentSelector';
 import LessonTabs from '../../components/LessonTabs';
 import DetailCard from '../../components/DetailCard';
 import QuizComponent from '../../components/Quiz';
+import Flashcard from '../../components/Flashcard';
 
 // --- Helper Components ---
 const Header = ({ lessonNumber }) => (
@@ -19,16 +20,30 @@ const Header = ({ lessonNumber }) => (
   </Box>
 );
 
-const FlashcardRenderer = (item, theme) => `
-    <div style="text-align: center;">
-      <h3 style="font-size: 1.5em; font-weight: bold; color: ${theme.palette.text.primary};">${item.word}</h3>
-      <p style="color: ${theme.palette.text.secondary};"><strong>Definition:</strong> ${item.definition}</p>
-      <div style="margin-top: 1.5em; padding-top: 1em; border-top: 1px solid ${theme.palette.divider};">
-        <h4 style="margin-bottom: 0.5em; color: ${theme.palette.text.primary};">Example Sentence:</h4>
-        <p style="margin-top: 0; color: ${theme.palette.text.secondary};"><em>"${item.sampleSentence}"</em></p>
-      </div>
-    </div>
-`;
+const FlashcardRenderer = (item, theme) => {
+    const frontContent = (
+        <Typography variant="h5" sx={{ color: theme.palette.text.primary, fontWeight: 'bold' }}>
+            {item.word}
+        </Typography>
+    );
+
+    const backContent = (
+        <Box>
+            <Typography variant="body1" sx={{ color: theme.palette.text.secondary, mb: 2 }}>
+                <strong>Definition:</strong> {item.definition}
+            </Typography>
+            <Typography variant="body2" sx={{ color: theme.palette.text.secondary, fontStyle: 'italic' }}>
+                <strong>Example:</strong> "{item.sampleSentence}"
+            </Typography>
+        </Box>
+    );
+
+    return (
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+            <Flashcard frontContent={frontContent} backContent={backContent} />
+        </Box>
+    );
+};
 
 const ChallengeView = ({ lessonData, theme }) => {
     // Transform lessonData.words into quiz format for QuizComponent
