@@ -63,7 +63,6 @@ const Flashcard = ({ frontContent, backContent }) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            transform: 'rotateY(180deg)',
             p: 2,
           }}
         >
