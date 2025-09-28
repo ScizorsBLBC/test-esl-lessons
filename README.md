@@ -2,12 +2,12 @@
 
 **⚠️ TEST ENVIRONMENT - NOT FOR PRODUCTION USE**
 
-Welcome to the ESL Lessons Hub Test Environment, a development and testing platform for new features and architectural improvements. This is a separate test environment that allows for safe experimentation and validation before deploying to production.
+Welcome to the ESL Lessons Hub Test Environment, a development and testing platform for new features and architectural improvements. This is a separate test environment that allows for safe experimentation and validation of dangerous refactors before deploying to production.
 
 **🔗 Live Test Site**: https://test-esl-lessons.scizors.wtf
-**📍 Production Site**: https://esl-lessons.scizors.wtf
+**📍 Production Site**: https://esl-lessons.scizors.wtf (Different Repository)
 
-This test environment contains experimental features and architectural improvements that are being validated before production deployment.
+This test environment serves as our live testing ground where we can safely test experimental features, dangerous refactors, and architectural changes. The production site runs on a separate repository and is not affected by changes here.
 
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
@@ -415,40 +415,64 @@ This test environment uses **Netlify** for deployment with serverless functions.
 
 ### Complete Deployment Process
 
-#### Option 1: Feature Branch to Production (Recommended)
+#### Option 1: Feature Branch to Main (Recommended Workflow)
 
-If your changes are on a feature branch (like `button-refactor`):
+New features and dangerous refactors are developed on feature branches and merged to main for live testing:
 
-1. **Create Pull Request on GitHub**:
+1. **Create Feature Branch**:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b feature/your-feature-name
+   ```
+
+2. **Develop and Test**:
+   - Make your changes on the feature branch
+   - Test locally with `npm run dev`
+   - Run `npm run build` to test production build
+   - Commit your changes with descriptive messages
+   - Test dangerous refactors safely in this isolated environment
+
+3. **Create Pull Request**:
+   - Push your feature branch to GitHub
    - Go to `https://github.com/ScizorsBLBC/ESL-Lessons`
-   - Click "Pull requests" tab
-   - Click "New pull request"
-   - Select `button-refactor` as the compare branch
-   - Select `main` as the base branch
+   - Click "Pull requests" tab → "New pull request"
+   - Select your feature branch as "compare"
+   - Select `main` as "base"
+   - Add descriptive title and description explaining the changes
    - Click "Create pull request"
 
-2. **Review and Merge**:
-   - Add a descriptive title and description
-   - Request review if needed
+4. **Review and Merge**:
+   - Request code review if needed
+   - Address any feedback or issues
    - Click "Merge pull request" → "Confirm merge"
 
-3. **Automatic Deployment**:
-   - GitHub Actions automatically triggers on main branch push
+5. **Live Test Deployment**:
+   - Changes automatically deploy to test environment
    - Monitor progress in the "Actions" tab
-   - Site updates in 2-5 minutes at `https://esl-lessons.scizors.wtf`
+   - Site updates in 2-5 minutes at `https://test-esl-lessons.scizors.wtf`
+   - Test the changes live in this safe test environment
 
-#### Option 2: Direct Merge (Quick Development)
+#### Option 2: Hotfix to Main (Emergency Updates)
 
-If you're the only developer and want to deploy immediately:
+For urgent bug fixes or security updates:
 
 ```bash
-# Merge feature branch into main
+# Create hotfix branch from main
 git checkout main
-git merge button-refactor
+git pull origin main
+git checkout -b hotfix/critical-issue
+
+# Make your fix and test thoroughly
+# Commit with descriptive message
+
+# Merge directly to main (bypassing PR for urgent fixes)
+git checkout main
+git merge hotfix/critical-issue
 git push origin main
 
 # Wait for GitHub Actions to deploy (2-5 minutes)
-# Site will be live at https://esl-lessons.scizors.wtf
+# Site will be live at https://test-esl-lessons.scizors.wtf
 ```
 
 #### Option 3: Manual Deployment (Troubleshooting)
@@ -548,9 +572,9 @@ If the site doesn't update after a push:
 
 ### Development Workflow
 
-#### Complete Development to Production Workflow
+#### Complete Development to Test Environment Workflow
 
-For new features or bug fixes:
+For new features, dangerous refactors, or bug fixes:
 
 1. **Create a Feature Branch**:
    ```bash
@@ -564,6 +588,7 @@ For new features or bug fixes:
    - Create/update components in `src/components/`
    - Test locally with `npm run dev`
    - Run `npm run build` to test production build
+   - This is a safe environment to test dangerous architectural changes
 
 3. **Commit and Push**:
    ```bash
@@ -577,32 +602,21 @@ For new features or bug fixes:
    - Click "Pull requests" tab → "New pull request"
    - Select your feature branch as "compare"
    - Select `main` as "base"
-   - Add description and click "Create pull request"
+   - Add detailed description of changes and testing approach
+   - Click "Create pull request"
 
 5. **Review and Merge**:
-   - Review the changes
+   - Review the changes thoroughly
    - Request code review if needed
    - Click "Merge pull request" → "Confirm merge"
 
-6. **Automatic Deployment**:
-   - GitHub Actions automatically triggers on main branch merge
+6. **Live Test Deployment**:
+   - Changes automatically deploy to test environment
    - Monitor in "Actions" tab
-   - Site updates in 2-5 minutes at `https://esl-lessons.scizors.wtf`
+   - Site updates in 2-5 minutes at `https://test-esl-lessons.scizors.wtf`
+   - Test changes live in this isolated test environment
+   - Production site (https://esl-lessons.scizors.wtf) remains unaffected
 
-#### Quick Commands Summary
-
-```bash
-# Start development
-git checkout main && git pull
-git checkout -b feature/new-feature
-npm run dev  # Test locally
-
-# Deploy to production
-git add . && git commit -m "feat: Description"
-git push origin feature/new-feature
-# Create PR on GitHub → Merge to main
-# GitHub Actions deploys automatically
-```
 
 #### Adding New Lessons
 
