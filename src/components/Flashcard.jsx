@@ -27,63 +27,56 @@ const Flashcard = ({ frontContent, backContent }) => {
           alignItems: 'center',
           justifyContent: 'center',
           p: 3,
-          '&:hover': {
-            transform: isFlipped ? 'rotateY(180deg) scale(1.02)' : 'rotateY(0deg) scale(1.02)',
-            boxShadow: 6,
-          },
         }}
       >
-        {/* Front of card - only show when not flipped */}
-        {!isFlipped && (
-          <Box
-            sx={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 2,
-            }}
-          >
-            <Box sx={{ width: '100%', textAlign: 'center', maxWidth: '280px' }}>
-              {React.isValidElement(frontContent) ? (
-                frontContent
-              ) : (
-                <Typography variant="h6" sx={{ textAlign: 'center' }}>
-                  {frontContent}
-                </Typography>
-              )}
-            </Box>
+        {/* Front of card */}
+        <Box
+          sx={{
+            position: 'absolute',
+            backfaceVisibility: 'hidden',
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transform: 'rotateY(0deg)',
+          }}
+        >
+          <Box sx={{ width: '100%', textAlign: 'center', maxWidth: '280px' }}>
+            {React.isValidElement(frontContent) ? (
+              frontContent
+            ) : (
+              <Typography variant="h6" sx={{ textAlign: 'center' }}>
+                {frontContent}
+              </Typography>
+            )}
           </Box>
-        )}
+        </Box>
 
-        {/* Back of card - only show when flipped */}
-        {isFlipped && (
-          <Box
-            sx={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 2,
-            }}
-          >
-            <Box sx={{ width: '100%', textAlign: 'center', maxWidth: '280px', transform: 'rotateY(180deg)' }}>
-              {React.isValidElement(backContent) ? (
-                <Box sx={{ transform: 'rotateY(180deg)' }}>
-                  {backContent}
-                </Box>
-              ) : (
-                <Typography variant="body1" sx={{ textAlign: 'center', transform: 'rotateY(180deg)' }}>
-                  {backContent}
-                </Typography>
-              )}
-            </Box>
+        {/* Back of card */}
+        <Box
+          sx={{
+            position: 'absolute',
+            backfaceVisibility: 'hidden',
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transform: 'rotateY(-180deg)',
+            p: 2,
+          }}
+        >
+          <Box sx={{ width: '100%', textAlign: 'center', maxWidth: '280px', zIndex: 1 }}>
+            {React.isValidElement(backContent) ? (
+              backContent
+            ) : (
+              <Typography variant="body1" sx={{ textAlign: 'center' }}>
+                {backContent}
+              </Typography>
+            )}
           </Box>
-        )}
+        </Box>
       </Paper>
     </Box>
   );
