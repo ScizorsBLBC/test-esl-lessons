@@ -42,13 +42,15 @@ const Flashcard = ({ frontContent, backContent }) => {
             transform: 'rotateY(0deg)',
           }}
         >
-          {React.isValidElement(frontContent) ? (
-            frontContent
-          ) : (
-            <Typography variant="h6" sx={{ textAlign: 'center' }}>
-              {frontContent}
-            </Typography>
-          )}
+          <Box sx={{ width: '100%', textAlign: 'center', maxWidth: '280px' }}>
+            {React.isValidElement(frontContent) ? (
+              frontContent
+            ) : (
+              <Typography variant="h6" sx={{ textAlign: 'center' }}>
+                {frontContent}
+              </Typography>
+            )}
+          </Box>
         </Box>
 
         {/* Back of card */}
@@ -65,13 +67,17 @@ const Flashcard = ({ frontContent, backContent }) => {
             p: 2,
           }}
         >
-          {React.isValidElement(backContent) ? (
-            backContent
-          ) : (
-            <Typography variant="body1" sx={{ textAlign: 'center' }}>
-              {backContent}
-            </Typography>
-          )}
+          <Box sx={{ width: '100%', textAlign: 'center', maxWidth: '280px' }}>
+            {React.isValidElement(backContent) ? (
+              <Box>
+                {backContent}
+              </Box>
+            ) : (
+              <Typography variant="body1" sx={{ textAlign: 'center' }}>
+                {backContent}
+              </Typography>
+            )}
+          </Box>
         </Box>
       </Paper>
     </Box>
