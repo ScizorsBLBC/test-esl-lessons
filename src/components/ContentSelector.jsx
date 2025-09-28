@@ -129,7 +129,11 @@ export default function ContentSelector({
                   }}>
                       <Fade in={!!currentItem} key={currentItem ? currentItem[dataKey] : 'empty'}>
                           <Box>
-                              <DetailCard content={detailRenderer(currentItem, theme)} />
+                              {React.isValidElement(detailRenderer(currentItem, theme)) ? (
+                                  detailRenderer(currentItem, theme)
+                              ) : (
+                                  <DetailCard content={detailRenderer(currentItem, theme)} />
+                              )}
                           </Box>
                       </Fade>
                   </Box>

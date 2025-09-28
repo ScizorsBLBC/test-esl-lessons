@@ -97,7 +97,7 @@ export default function VocabularyPage() {
 
     useEffect(() => {
         if (activeLesson) {
-            document.title = `Vocabulary Lesson ${activeLesson.lesson} | ESL Lessons`;
+            document.title = `Vocabulary Lesson ${activeLesson.lesson} | ESL Lessons Hub`;
         }
     }, [activeLesson]);
 
