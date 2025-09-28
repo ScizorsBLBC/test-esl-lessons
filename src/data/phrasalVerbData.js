@@ -121,26 +121,40 @@ export const phrasalVerbData = {
     },
     {
       blockId: "assessment-gap-fill",
-      type: "text",
+      type: "fillInTheBlanks",
       data: {
-        htmlContent: `<h2>Gap-Fill Exercise</h2><p>Complete the following sentences with a phrasal verb from the "Workplace" list:</p>
-        <div class="homework-email">
-            <ol style="list-style-type: decimal; padding-left: 1.5em; margin-bottom: 1em;">
-                <li>If we don't have all the information, we should ________ the meeting until next week.</li>
-                <li>Could you please ________ this form with your name and contact details?</li>
-                <li>I can't talk right now, can you ________ for a minute?</li>
-                <li>She is very good at her job and knows how to ________ difficult customers.</li>
-                <li>The presentation was ________ due to a technical issue with the projector.</li>
-                <li>Don't forget to ________ your expense report by the end of the month.</li>
-                <li>I need to ________ the new software on my computer before I can start working.</li>
-                <li>Even though it was difficult, the team decided to ________ with the project.</li>
-                <li>We need to ________ a better system for tracking our progress.</li>
-            </ol>
-            <div id="answer-key" style="display: none; padding-top: 1em; border-top: 1px solid rgba(255,255,255,0.1);">
-              <p style="font-style: italic; font-weight: bold; margin-top: 1.5em;">(Answers: 1. put off, 2. fill in, 3. hold on, 4. deal with, 5. called off, 6. hand in, 7. set up, 8. carry on, 9. work out)</p>
-            </div>
-            <button id="show-answers-btn" onclick="document.getElementById('answer-key').style.display='block'; this.style.display='none';" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #E91E63; background-color: transparent; color: #E91E63; cursor: pointer; margin-top: 1em;">Show Answers</button>
-        </div>`
+        sentence: "If we don't have all the information, we should ________ the meeting until next week.",
+        answers: ["put off", "postpone", "delay"]
+      }
+    },
+    {
+      blockId: "assessment-quiz",
+      type: "quiz",
+      data: {
+        quizTitle: "Phrasal Verbs Quiz",
+        quizSynopsis: "Test your knowledge of workplace phrasal verbs",
+        questions: [
+          {
+            question: "What does 'carry on' mean?",
+            questionType: "text",
+            answers: ["To continue", "To stop", "To begin"],
+            correctAnswer: "1"
+          },
+          {
+            question: "Which phrasal verb means 'to handle a problem'?",
+            questionType: "text",
+            answers: ["Deal with", "Put off", "Set up"],
+            correctAnswer: "1"
+          }
+        ]
+      }
+    },
+    {
+      blockId: "assessment-flashcard",
+      type: "flashcard",
+      data: {
+        front: "Carry on",
+        back: "To continue with a task or activity"
       }
     },
     {
@@ -148,10 +162,10 @@ export const phrasalVerbData = {
       type: "text",
       data: {
         htmlContent: `<h2>Contextual Practice</h2><p>For each scenario below, write a short dialogue (2-4 lines). Try to use at least three workplace phrasal verbs.</p>
-        <h4 style="font-weight: bold; margin-top: 1.5em;">Scenario: Planning a Meeting</h4>
-        <p><strong>Student A:</strong> You need to organize a project meeting. <strong>Student B:</strong> You have a busy schedule.</p>
-        <div class="homework-email">
-            <p style="font-style: italic;">Example: "Hi, I'm calling to <strong>set up</strong> a meeting. Are you free on Tuesday?" / "I'm not sure, can you <strong>hold on</strong>? Can we <strong>put it off</strong> until Wednesday?"</p>
+                <h4 style="font-weight: bold; margin-top: 1.5em;">Scenario: Planning a Meeting</h4>
+                <p><strong>Student A:</strong> You need to organize a project meeting. <strong>Student B:</strong> You have a busy schedule.</p>
+                <div class="homework-email">
+                    <p style="font-style: italic;">Example: "Hi, I'm calling to <strong>set up</strong> a meeting. Are you free on Tuesday?" / "I'm not sure, can you <strong>hold on</strong>? Can we <strong>put it off</strong> until Wednesday?"</p>
         </div>`
       }
     },
@@ -162,6 +176,6 @@ export const phrasalVerbData = {
         htmlContent: `<h2>Homework Assignment</h2><p>Write a short story (150-200 words) about a challenging day at work. Your story must use at least <strong>10 different phrasal verbs</strong> from the full reference guide.</p>
         <p>Bring your completed story to our next lesson for review.</p>`
       }
-    }
-  ]
+        }
+    ]
 };

@@ -1,39 +1,24 @@
 import React from 'react';
 import DetailCard from './DetailCard';
+import QuizComponent from './Quiz';
+import FillInTheBlanks from './FillInTheBlanks';
+import Flashcard from './Flashcard';
 
 const ContentBlockRenderer = ({ block }) => {
   switch (block.type) {
     case 'text':
       return <DetailCard content={block.data.htmlContent} />;
     case 'quiz':
-      return (
-        <div>
-          <h3>Quiz Component</h3>
-          <p>Quiz functionality will be implemented in phase 2.</p>
-          <pre>{JSON.stringify(block.data, null, 2)}</pre>
-        </div>
-      );
+      return <QuizComponent quizData={block.data} />;
     case 'fillInTheBlanks':
-      return (
-        <div>
-          <h3>Fill in the Blanks Component</h3>
-          <p>Fill-in-the-blanks functionality will be implemented in phase 2.</p>
-          <pre>{JSON.stringify(block.data, null, 2)}</pre>
-        </div>
-      );
+      return <FillInTheBlanks data={block.data} />;
     case 'flashcard':
-      return (
-        <div>
-          <h3>Flashcard Component</h3>
-          <p>Flashcard functionality will be implemented in phase 2.</p>
-          <pre>{JSON.stringify(block.data, null, 2)}</pre>
-        </div>
-      );
+      return <Flashcard frontContent={block.data.front} backContent={block.data.back} />;
     case 'youtubeEmbed':
       return (
         <div>
           <h3>YouTube Embed Component</h3>
-          <p>YouTube embed functionality will be implemented in phase 2.</p>
+          <p>YouTube embed functionality will be implemented in future phases.</p>
           <pre>{JSON.stringify(block.data, null, 2)}</pre>
         </div>
       );
@@ -41,7 +26,7 @@ const ContentBlockRenderer = ({ block }) => {
       return (
         <div>
           <h3>Chart Component</h3>
-          <p>Chart functionality will be implemented in phase 2.</p>
+          <p>Chart functionality will be implemented in future phases.</p>
           <pre>{JSON.stringify(block.data, null, 2)}</pre>
         </div>
       );
