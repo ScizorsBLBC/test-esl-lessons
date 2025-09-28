@@ -1,6 +1,13 @@
-# ESL Lessons Hub
+# ESL Lessons Hub - Test Environment
 
-Welcome to the ESL Lessons Hub, a modern, interactive web application designed to provide dynamic and engaging lessons for English language learners. This project is built with Vite and React, leveraging Material-UI for a beautiful and responsive user interface.
+**⚠️ TEST ENVIRONMENT - NOT FOR PRODUCTION USE**
+
+Welcome to the ESL Lessons Hub Test Environment, a development and testing platform for new features and architectural improvements. This is a separate test environment that allows for safe experimentation and validation before deploying to production.
+
+**🔗 Live Test Site**: https://test-esl-lessons.scizors.wtf
+**📍 Production Site**: https://esl-lessons.scizors.wtf
+
+This test environment contains experimental features and architectural improvements that are being validated before production deployment.
 
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
@@ -101,16 +108,16 @@ This project follows a strict set of principles to ensure it remains scalable, m
     ```
     The server will run on `http://localhost:3001`.
 
-## Deployment
+## Deployment (Test Environment)
 
-Deployment is fully automated using **GitHub Actions**. The site is configured to automatically rebuild and deploy whenever changes are pushed to the `main` branch.
+This test environment uses **Netlify** for deployment with serverless functions. The site is configured to automatically rebuild and deploy whenever changes are pushed to any branch.
 
-### How the GitHub Actions Deployment Works
+### How the Netlify Deployment Works
 
-1. **Automatic Trigger**: Every push to the `main` branch triggers the deployment workflow
-2. **Build Process**: The workflow is simple, you just need to run `npm install` and `npm run build` to create production files
-3. **Deployment**: The contents of the `dist` folder are automatically deployed to GitHub Pages
-4. **Live Site**: The site is served at `https://esl-lessons.scizors.wtf`
+1. **Automatic Trigger**: Every push to any branch triggers the deployment workflow
+2. **Build Process**: Netlify runs `npm install` and `npm run build` to create production files
+3. **Serverless Functions**: The `server/` directory contains API endpoints
+4. **Live Test Site**: The site is served at `https://test-esl-lessons.scizors.wtf`
 
 ### Complete Deployment Process
 
