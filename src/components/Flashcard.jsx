@@ -42,9 +42,13 @@ const Flashcard = ({ frontContent, backContent }) => {
             transform: 'rotateY(0deg)',
           }}
         >
-          <Typography variant="h6" sx={{ textAlign: 'center' }}>
-            {frontContent}
-          </Typography>
+          {React.isValidElement(frontContent) ? (
+            frontContent
+          ) : (
+            <Typography variant="h6" sx={{ textAlign: 'center' }}>
+              {frontContent}
+            </Typography>
+          )}
         </Box>
 
         {/* Back of card */}
@@ -58,11 +62,16 @@ const Flashcard = ({ frontContent, backContent }) => {
             alignItems: 'center',
             justifyContent: 'center',
             transform: 'rotateY(180deg)',
+            p: 2,
           }}
         >
-          <Typography variant="body1" sx={{ textAlign: 'center' }}>
-            {backContent}
-          </Typography>
+          {React.isValidElement(backContent) ? (
+            backContent
+          ) : (
+            <Typography variant="body1" sx={{ textAlign: 'center' }}>
+              {backContent}
+            </Typography>
+          )}
         </Box>
       </Paper>
     </Box>
