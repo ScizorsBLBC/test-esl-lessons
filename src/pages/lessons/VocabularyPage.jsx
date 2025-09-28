@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
-import { Box, Typography, Fade, Paper, List, ListItem, ListItemText } from '@mui/material';
+import { Box, Typography, Fade, Paper, List, ListItem, ListItemText, useTheme } from '@mui/material';
 import { vocabularyData } from '../../data/vocabularyData.js';
 import ContentSelector from '../../components/ContentSelector';
 import LessonTabs from '../../components/LessonTabs';
@@ -20,11 +20,11 @@ const Header = ({ lessonNumber }) => (
 
 const FlashcardRenderer = (item) => `
     <div style="text-align: center;">
-      <h3 style="font-size: 1.5em; font-weight: bold;">${item.word}</h3>
-      <p><strong>Definition:</strong> ${item.definition}</p>
-      <div style="margin-top: 1.5em; padding-top: 1em; border-top: 1px solid rgba(255,255,255,0.1);">
-        <h4 style="margin-bottom: 0.5em;">Example Sentence:</h4>
-        <p style="margin-top: 0;"><em>"${item.sampleSentence}"</em></p>
+      <h3 style="font-size: 1.5em; font-weight: bold; color: ${theme.palette.text.primary};">${item.word}</h3>
+      <p style="color: ${theme.palette.text.secondary};"><strong>Definition:</strong> ${item.definition}</p>
+      <div style="margin-top: 1.5em; padding-top: 1em; border-top: 1px solid ${theme.palette.divider};">
+        <h4 style="margin-bottom: 0.5em; color: ${theme.palette.text.primary};">Example Sentence:</h4>
+        <p style="margin-top: 0; color: ${theme.palette.text.secondary};"><em>"${item.sampleSentence}"</em></p>
       </div>
     </div>
 `;
@@ -50,18 +50,18 @@ const ChallengeView = ({ lessonData }) => {
         setShowDefinition(false);
     }, [currentItem, lessonData.words]);
 
-    const handleAnswer = (selectedWord) => {
+    const handleAnswer = (selectedWord, theme) => {
         if (showDefinition) return;
 
         if (selectedWord === currentItem.word) {
-            setFeedback({ text: 'Correct!', color: 'green' });
+            setFeedback({ text: 'Correct!', color: theme.palette.success.main });
             setShowDefinition(true);
             setTimeout(() => {
                 const nextIndex = (currentIndex + 1) % lessonData.words.length;
                 setCurrentIndex(nextIndex);
             }, 2500);
         } else {
-            setFeedback({ text: 'Not quite, try again!', color: 'red' });
+            setFeedback({ text: 'Not quite, try again!', color: theme.palette.error.main });
             setTimeout(() => setFeedback({ text: '', color: '' }), 1500);
         }
     };
@@ -69,9 +69,11 @@ const ChallengeView = ({ lessonData }) => {
     const sentenceHTML = currentItem.challengeSentence.replace('_______', `<u style="text-decoration-style: dotted;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>`);
     
     const buttonHTML = shuffledChoices.map(choice => `
-        <button 
+        <button
             onclick="document.dispatchEvent(new CustomEvent('challengeAnswer', { detail: { word: '${choice}' } }))"
-            style="padding: 12px 24px; border-radius: 8px; border: 1px solid; cursor: pointer; min-width: 150px; background-color: transparent; color: inherit; font-size: 1rem;"
+            style="padding: 12px 24px; border-radius: 8px; border: 1px solid ${theme.palette.divider}; cursor: pointer; min-width: 150px; background-color: transparent; color: ${theme.palette.text.primary}; font-size: 1rem; transition: all 0.2s ease-in-out;"
+            onmouseover="this.style.backgroundColor='${theme.palette.action.hover}'; this.style.transform='scale(1.02)';"
+            onmouseout="this.style.backgroundColor='transparent'; this.style.transform='scale(1)';"
         >${choice}</button>
     `).join('');
 
@@ -79,10 +81,10 @@ const ChallengeView = ({ lessonData }) => {
     const definitionHTML = showDefinition ? `<p style="margin-top: 1em; font-size: 1.1em;"><strong>${currentItem.word}:</strong> ${currentItem.definition}</p>` : '';
 
     useEffect(() => {
-        const eventListener = (event) => handleAnswer(event.detail.word);
+        const eventListener = (event) => handleAnswer(event.detail.word, theme);
         document.addEventListener('challengeAnswer', eventListener);
         return () => document.removeEventListener('challengeAnswer', eventListener);
-    }, [shuffledChoices, currentIndex]);
+    }, [shuffledChoices, currentIndex, theme]);
 
     return (
         <DetailCard content={`
@@ -103,6 +105,7 @@ const ChallengeView = ({ lessonData }) => {
 export default function VocabularyPage() {
     const { lessonId } = useParams();
     const [activeTab, setActiveTab] = useState(0);
+    const theme = useTheme();
 
     const activeLesson = useMemo(() => {
         const id = parseInt(lessonId, 10);
@@ -144,6 +147,7 @@ export default function VocabularyPage() {
                                 title={`Lesson ${activeLesson.lesson}: Words`}
                                 description="Select a word to see its definition and a sample sentence."
                                 detailRenderer={FlashcardRenderer}
+                                theme={theme}
                             />
                         </div>
                     </Fade>

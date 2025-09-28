@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
-import { Box, Typography, Fade } from '@mui/material';
+import { Box, Typography, Fade, useTheme } from '@mui/material';
 import { idiomData } from '../../data/idiomData.js';
 import ContentSelector from '../../components/ContentSelector';
 import LessonTabs from '../../components/LessonTabs';
@@ -18,21 +18,21 @@ const Header = ({ lessonNumber }) => (
   </Box>
 );
 
-const FlashcardRenderer = (item) => `
+const FlashcardRenderer = (item, theme) => `
     <div style="text-align: center;">
-      <h3 style="font-size: 1.5em; font-weight: bold;">${item.idiom}</h3>
-      <p><strong>Meaning:</strong> ${item.meaning}</p>
-      <div style="margin-top: 1.5em; padding-top: 1em; border-top: 1px solid rgba(255,255,255,0.1);">
-        <h4 style="margin-bottom: 0.5em;">Example Sentence:</h4>
-        <p style="margin-top: 0;"><em>"${item.example}"</em></p>
+      <h3 style="font-size: 1.5em; font-weight: bold; color: ${theme.palette.text.primary};">${item.idiom}</h3>
+      <p style="color: ${theme.palette.text.secondary};"><strong>Meaning:</strong> ${item.meaning}</p>
+      <div style="margin-top: 1.5em; padding-top: 1em; border-top: 1px solid ${theme.palette.divider};">
+        <h4 style="margin-bottom: 0.5em; color: ${theme.palette.text.primary};">Example Sentence:</h4>
+        <p style="margin-top: 0; color: ${theme.palette.text.secondary};"><em>"${item.example}"</em></p>
       </div>
     </div>
 `;
 
-const StoryRenderer = (item) => `
+const StoryRenderer = (item, theme) => `
     <div style="text-align: center;">
-      <h3 style="font-size: 1.5em; font-weight: bold;">${item.idiom}</h3>
-      <p><strong>The Story Behind It:</strong> ${item.story}</p>
+      <h3 style="font-size: 1.5em; font-weight: bold; color: ${theme.palette.text.primary};">${item.idiom}</h3>
+      <p style="color: ${theme.palette.text.secondary};"><strong>The Story Behind It:</strong> ${item.story}</p>
     </div>
 `;
 
@@ -113,6 +113,7 @@ const ChallengeView = ({ lessonData }) => {
 export default function IdiomPage() {
     const { lessonId } = useParams();
     const [activeTab, setActiveTab] = useState(0);
+    const theme = useTheme();
 
     const activeLesson = useMemo(() => {
         const id = parseInt(lessonId, 10);
@@ -153,6 +154,7 @@ export default function IdiomPage() {
                         description="Select an idiom to see its meaning and an example."
                         detailRenderer={FlashcardRenderer}
                         dataKey="idiom"
+                        theme={theme}
                     />
                 )}
 
@@ -163,6 +165,7 @@ export default function IdiomPage() {
                         description="Select an idiom to learn its origin story."
                         detailRenderer={StoryRenderer}
                         dataKey="idiom"
+                        theme={theme}
                     />
                 )}
 

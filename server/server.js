@@ -68,5 +68,14 @@ app.use((error, req, res, next) => {
   res.status(500).json({ error: 'Internal server error' });
 });
 
+// For local development, start the server
+if (process.env.NODE_ENV !== 'production' || process.env.LOCAL_DEV === 'true') {
+  app.listen(PORT, () => {
+    console.log(`🚀 ESL Lessons API server running on port ${PORT}`);
+    console.log(`📝 Health check: http://localhost:${PORT}/health`);
+    console.log(`🌐 Translation API: http://localhost:${PORT}/api/translate`);
+  });
+}
+
 // Export the handler for Netlify Functions
 module.exports.handler = serverless(app);
