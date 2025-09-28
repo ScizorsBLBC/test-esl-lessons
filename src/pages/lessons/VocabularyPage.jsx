@@ -18,7 +18,7 @@ const Header = ({ lessonNumber }) => (
   </Box>
 );
 
-const FlashcardRenderer = (item) => `
+const FlashcardRenderer = (item, theme) => `
     <div style="text-align: center;">
       <h3 style="font-size: 1.5em; font-weight: bold; color: ${theme.palette.text.primary};">${item.word}</h3>
       <p style="color: ${theme.palette.text.secondary};"><strong>Definition:</strong> ${item.definition}</p>

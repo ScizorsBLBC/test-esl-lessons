@@ -48,7 +48,7 @@ const PronunciationPage = () => {
   };
 
   // --- Renderer for Vowels/Consonants (Main Tabs) ---
-  const pronunciationDetailRenderer = (item) => {
+  const pronunciationDetailRenderer = (item, theme) => {
     if (!item) return '';
     const { sounds, importance, howTo, practiceWords, videos } = item;
     const howToHtml = Array.isArray(howTo) ? howTo.map(step => `<p style="color: ${theme.palette.text.secondary};">${step}</p>`).join('') : `<p style="color: ${theme.palette.text.secondary};">${howTo || ''}</p>`;
