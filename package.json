@@ -1,9 +1,9 @@
 {
-  "name": "esl-lessons-react",
+  "name": "test-esl-lessons",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://esl-lessons.scizors.wtf",
+  "homepage": "https://test-esl-lessons.scizors.wtf",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

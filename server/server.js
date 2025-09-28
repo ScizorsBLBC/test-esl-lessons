@@ -2,15 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
+const serverless = require('serverless-http');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Configure CORS for development (restrict in production)
+// Configure CORS for Netlify deployment
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production'
-    ? ['https://esl-lessons.scizors.wtf']
-    : ['http://localhost:5173', 'http://localhost:3000'],
+  origin: ['https://test-esl-lessons.scizors.wtf', 'http://localhost:5173'],
   credentials: true
 }));
 
@@ -69,8 +68,5 @@ app.use((error, req, res, next) => {
   res.status(500).json({ error: 'Internal server error' });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 ESL Lessons BFF Proxy Server running on port ${PORT}`);
-  console.log(`📝 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🔒 DeepL API Key: ${process.env.DEEPL_API_KEY ? '✅ Configured' : '❌ Missing'}`);
-});
+// Export the handler for Netlify Functions
+module.exports.handler = serverless(app);
