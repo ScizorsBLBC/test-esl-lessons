@@ -22,13 +22,13 @@ const Header = ({ lessonNumber }) => (
 
 const FlashcardRenderer = (item, theme) => {
     const frontContent = (
-        <Typography variant="h5" sx={{ color: theme.palette.text.primary, fontWeight: 'bold' }}>
+        <Typography variant="h5" sx={{ color: theme.palette.text.primary, fontWeight: 'bold', transform: 'none' }}>
             {item.word}
         </Typography>
     );
 
     const backContent = (
-        <Box>
+        <Box sx={{ transform: 'none', position: 'static' }}>
             <Typography variant="body1" sx={{ color: theme.palette.text.secondary, mb: 2 }}>
                 <strong>Definition:</strong> {item.definition}
             </Typography>

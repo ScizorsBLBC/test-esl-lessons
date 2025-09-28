@@ -67,11 +67,9 @@ const Flashcard = ({ frontContent, backContent }) => {
             p: 2,
           }}
         >
-          <Box sx={{ width: '100%', textAlign: 'center', maxWidth: '280px' }}>
+          <Box sx={{ width: '100%', textAlign: 'center', maxWidth: '280px', zIndex: 1 }}>
             {React.isValidElement(backContent) ? (
-              <Box>
-                {backContent}
-              </Box>
+              backContent
             ) : (
               <Typography variant="body1" sx={{ textAlign: 'center' }}>
                 {backContent}
