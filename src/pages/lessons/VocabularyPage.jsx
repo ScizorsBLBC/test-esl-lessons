@@ -29,7 +29,7 @@ const FlashcardRenderer = (item, theme) => `
     </div>
 `;
 
-const ChallengeView = ({ lessonData }) => {
+const ChallengeView = ({ lessonData, theme }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [feedback, setFeedback] = useState({ text: '', color: '' });
     const [showDefinition, setShowDefinition] = useState(false);
@@ -156,8 +156,9 @@ export default function VocabularyPage() {
                 {activeTab === 1 && (
                      <Fade in={true} key={`lesson-${activeLesson.lesson}-challenge`}>
                         <div>
-                            <ChallengeView 
+                            <ChallengeView
                                 lessonData={activeLesson}
+                                theme={theme}
                             />
                         </div>
                     </Fade>
