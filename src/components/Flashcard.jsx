@@ -71,11 +71,13 @@ const Flashcard = ({ frontContent, backContent }) => {
               zIndex: 2,
             }}
           >
-            <Box sx={{ width: '100%', textAlign: 'center', maxWidth: '280px' }}>
+            <Box sx={{ width: '100%', textAlign: 'center', maxWidth: '280px', transform: 'rotateY(180deg)' }}>
               {React.isValidElement(backContent) ? (
-                backContent
+                <Box sx={{ transform: 'rotateY(180deg)' }}>
+                  {backContent}
+                </Box>
               ) : (
-                <Typography variant="body1" sx={{ textAlign: 'center' }}>
+                <Typography variant="body1" sx={{ textAlign: 'center', transform: 'rotateY(180deg)' }}>
                   {backContent}
                 </Typography>
               )}
