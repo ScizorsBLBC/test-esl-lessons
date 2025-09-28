@@ -1,5 +1,8 @@
 # Test Environment Deployment Guide
-# ESL Lessons Hub - Test Environment Setup
+# ESL Lessons Hub - Main Branch Test Environment Setup
+
+**⚠️ TEST ENVIRONMENT ONLY**
+This repository serves as our live test environment where dangerous refactors and experimental features can be safely tested before production deployment.
 
 ## 🚀 Deployment Status: PENDING
 - ✅ Code committed to test branch
