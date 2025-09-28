@@ -39,11 +39,8 @@ const StoryRenderer = (item, theme) => `
 `;
 
 // --- Challenge View Component ---
-const ChallengeView = ({ lessonData, selectedIdiomIndex, theme }) => {
-    // Get the current idiom
-    const currentIdiom = lessonData.idioms[selectedIdiomIndex];
-
-    // Create quiz data for the QuizComponent
+const ChallengeView = ({ lessonData, theme }) => {
+    // Create quiz data for all idioms in the lesson
     const quizData = useMemo(() => {
         const challengeSentences = [
             `I know he made a mistake, but it's his first day. Let's _______.`,
@@ -51,34 +48,37 @@ const ChallengeView = ({ lessonData, selectedIdiomIndex, theme }) => {
             `The weather is perfect for outdoor work, so we should _______ and finish the project.`
         ];
 
-        const currentSentence = challengeSentences[selectedIdiomIndex] || challengeSentences[0];
+        // Create questions for all idioms
+        const questions = lessonData.idioms.map((idiom, index) => {
+            const currentSentence = challengeSentences[index] || challengeSentences[0];
 
-        // Get 3 distractor idioms (excluding the correct one)
-        const distractorIdioms = lessonData.idioms
-            .filter(idiom => idiom.idiom !== currentIdiom.idiom)
-            .sort(() => 0.5 - Math.random())
-            .slice(0, 3)
-            .map(idiom => idiom.idiom);
+            // Get 3 distractor idioms (excluding the correct one)
+            const distractorIdioms = lessonData.idioms
+                .filter(id => id.idiom !== idiom.idiom)
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 3)
+                .map(id => id.idiom);
 
-        // Create shuffled answers array (4 options total)
-        const allAnswers = [currentIdiom.idiom, ...distractorIdioms].sort(() => 0.5 - Math.random());
+            // Create shuffled answers array (4 options total)
+            const allAnswers = [idiom.idiom, ...distractorIdioms].sort(() => 0.5 - Math.random());
 
-        // Find the 1-indexed position of the correct answer
-        const correctAnswerIndex = allAnswers.indexOf(currentIdiom.idiom) + 1;
+            // Find the 1-indexed position of the correct answer
+            const correctAnswerIndex = allAnswers.indexOf(idiom.idiom) + 1;
+
+            return {
+                question: currentSentence.replace('_______', '________'),
+                answers: allAnswers,
+                correctAnswer: correctAnswerIndex.toString(),
+                messageForCorrectAnswer: `Correct! "${idiom.idiom}" is the right idiom for this context.`,
+                messageForIncorrectAnswer: `Not quite. The correct idiom is "${idiom.idiom}".`
+            };
+        });
 
         return {
-            quizTitle: `Complete the Conversation`,
-            questions: [
-                {
-                    question: currentSentence.replace('_______', '________'),
-                    answers: allAnswers,
-                    correctAnswer: correctAnswerIndex.toString(),
-                    messageForCorrectAnswer: `Correct! "${currentIdiom.idiom}" is the right idiom for this context.`,
-                    messageForIncorrectAnswer: `Not quite. The correct idiom is "${currentIdiom.idiom}".`
-                }
-            ]
+            quizTitle: `Complete All Conversations`,
+            questions: questions
         };
-    }, [lessonData, selectedIdiomIndex, currentIdiom]);
+    }, [lessonData]);
 
     return <QuizComponent quizData={quizData} />;
 };
@@ -117,73 +117,94 @@ export default function IdiomPage() {
         return <Navigate to="/" replace />;
     }
 
-    const idiomTabs = activeLesson.idioms.map((idiom, index) => `Idiom ${index + 1}`);
-    const viewModes = ["Stories", "Challenge"];
+    const idiomTabs = [...activeLesson.idioms.map((idiom, index) => `Idiom ${index + 1}`), "Challenge"];
+    const viewModes = ["Meaning", "Story"];
 
     return (
         <Box sx={{ width: '100%' }}>
             <Header lessonNumber={activeLesson.lesson} />
 
-            {/* Idiom Selection Tabs */}
+            {/* Idiom/Challenge Selection Tabs */}
             <LessonTabs
                 activeTab={selectedIdiomIndex}
                 handleTabChange={(e, newValue) => handleIdiomSelect(newValue)}
                 sections={idiomTabs}
             />
 
-            {/* View Selection Buttons */}
-            <Box sx={{ mt: 4, mb: 3, textAlign: 'center' }}>
-                <Typography variant="h6" sx={{ mb: 3, color: 'text.secondary' }}>
-                    Choose a view for "{selectedIdiom?.idiom}":
-                </Typography>
-                <Stack
-                    direction="row"
-                    spacing={2}
-                    justifyContent="center"
-                    flexWrap="wrap"
-                    sx={{ maxWidth: '600px', mx: 'auto' }}
-                >
-                    {viewModes.map((view, index) => (
-                        <GlassButtonWrapper key={view} isActive={activeView === index}>
-                            <Button
-                                onClick={() => handleViewChange(index)}
-                                sx={{
-                                    color: theme.palette.secondary.main,
-                                    minWidth: '120px',
-                                    transition: 'all 0.2s ease-in-out',
-                                    backgroundColor: 'transparent',
-                                    '&:hover': {
-                                        backgroundColor: theme.palette.action.hover,
-                                        color: theme.palette.primary.main,
-                                        transform: 'scale(1.02)',
-                                    },
-                                }}
-                            >
-                                {view}
-                            </Button>
-                        </GlassButtonWrapper>
-                    ))}
-                </Stack>
-            </Box>
+            {/* Only show view buttons if not on Challenge tab */}
+            {selectedIdiomIndex < activeLesson.idioms.length && (
+                <Box sx={{ mt: 4, mb: 3, textAlign: 'center' }}>
+                    <Typography variant="h6" sx={{ mb: 3, color: 'text.secondary' }}>
+                        Choose a view for "{selectedIdiom?.idiom}":
+                    </Typography>
+                    <Stack
+                        direction="row"
+                        spacing={2}
+                        justifyContent="center"
+                        flexWrap="wrap"
+                        sx={{ maxWidth: '600px', mx: 'auto' }}
+                    >
+                        {viewModes.map((view, index) => (
+                            <GlassButtonWrapper key={view} isActive={activeView === index}>
+                                <Button
+                                    onClick={() => handleViewChange(index)}
+                                    sx={{
+                                        color: theme.palette.secondary.main,
+                                        minWidth: '120px',
+                                        transition: 'all 0.2s ease-in-out',
+                                        backgroundColor: 'transparent',
+                                        '&:hover': {
+                                            backgroundColor: theme.palette.action.hover,
+                                            color: theme.palette.primary.main,
+                                            transform: 'scale(1.02)',
+                                        },
+                                    }}
+                                >
+                                    {view}
+                                </Button>
+                            </GlassButtonWrapper>
+                        ))}
+                    </Stack>
+                </Box>
+            )}
 
             <Box sx={{ mt: 4 }}>
-                {activeView === 0 && selectedIdiom && (
-                    <Fade in={true}>
-                        <div>
-                            <DetailCard content={`
-                                <div style="text-align: center;">
-                                    <h3 style="font-size: 1.5em; font-weight: bold; color: ${theme.palette.text.primary};">${selectedIdiom.idiom}</h3>
-                                    <p style="color: ${theme.palette.text.secondary};"><strong>The Story Behind It:</strong> ${selectedIdiom.story}</p>
+                {/* Show content for individual idioms */}
+                {selectedIdiomIndex < activeLesson.idioms.length && (
+                    <>
+                        {activeView === 0 && selectedIdiom && (
+                            <Fade in={true}>
+                                <div>
+                                    <DetailCard content={`
+                                        <div style="text-align: center;">
+                                            <h3 style="font-size: 1.5em; font-weight: bold; color: ${theme.palette.text.primary};">${selectedIdiom.idiom}</h3>
+                                            <p style="color: ${theme.palette.text.secondary};"><strong>Meaning:</strong> ${selectedIdiom.meaning}</p>
+                                        </div>
+                                    `} />
                                 </div>
-                            `} />
-                        </div>
-                    </Fade>
+                            </Fade>
+                        )}
+
+                        {activeView === 1 && selectedIdiom && (
+                            <Fade in={true}>
+                                <div>
+                                    <DetailCard content={`
+                                        <div style="text-align: center;">
+                                            <h3 style="font-size: 1.5em; font-weight: bold; color: ${theme.palette.text.primary};">${selectedIdiom.idiom}</h3>
+                                            <p style="color: ${theme.palette.text.secondary};"><strong>Story:</strong> ${selectedIdiom.story}</p>
+                                        </div>
+                                    `} />
+                                </div>
+                            </Fade>
+                        )}
+                    </>
                 )}
 
-                {activeView === 1 && selectedIdiom && (
+                {/* Show challenge for all idioms */}
+                {selectedIdiomIndex === activeLesson.idioms.length && (
                     <Fade in={true}>
                         <div>
-                            <ChallengeView lessonData={activeLesson} selectedIdiomIndex={selectedIdiomIndex} theme={theme} />
+                            <ChallengeView lessonData={activeLesson} theme={theme} />
                         </div>
                     </Fade>
                 )}
