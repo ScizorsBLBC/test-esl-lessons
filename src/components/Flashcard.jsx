@@ -20,13 +20,15 @@ const Flashcard = ({ frontContent, backContent }) => {
           position: 'relative',
           width: '100%',
           height: '100%',
+          transformStyle: 'preserve-3d',
+          transition: 'transform 0.6s',
+          transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           p: 3,
-          transition: 'all 0.3s ease-in-out',
           '&:hover': {
-            transform: 'scale(1.02)',
+            transform: isFlipped ? 'rotateY(180deg) scale(1.02)' : 'rotateY(0deg) scale(1.02)',
             boxShadow: 6,
           },
         }}
@@ -66,7 +68,6 @@ const Flashcard = ({ frontContent, backContent }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              transform: 'rotateY(180deg)',
               zIndex: 2,
             }}
           >
