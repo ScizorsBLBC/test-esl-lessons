@@ -5,6 +5,7 @@ import { vocabularyData } from '../../data/vocabularyData.js';
 import ContentSelector from '../../components/ContentSelector';
 import LessonTabs from '../../components/LessonTabs';
 import DetailCard from '../../components/DetailCard';
+import QuizComponent from '../../components/Quiz';
 
 // --- Helper Components ---
 const Header = ({ lessonNumber }) => (
@@ -30,75 +31,38 @@ const FlashcardRenderer = (item, theme) => `
 `;
 
 const ChallengeView = ({ lessonData, theme }) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [feedback, setFeedback] = useState({ text: '', color: '' });
-    const [showDefinition, setShowDefinition] = useState(false);
-    const [shuffledChoices, setShuffledChoices] = useState([]);
+    // Transform lessonData.words into quiz format for QuizComponent
+    const quizData = useMemo(() => {
+        const questions = lessonData.words.map((wordItem, index) => {
+            // Get 3 distractor words (excluding the correct answer)
+            const distractorWords = lessonData.words
+                .filter(w => w.word !== wordItem.word)
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 3)
+                .map(w => w.word);
 
-    const currentItem = lessonData.words[currentIndex];
+            // Create shuffled answers array (4 options total)
+            const allAnswers = [wordItem.word, ...distractorWords].sort(() => 0.5 - Math.random());
 
-    useEffect(() => {
-        const distractorWords = lessonData.words
-            .filter(w => w.word !== currentItem.word)
-            .sort(() => 0.5 - Math.random())
-            .slice(0, 3)
-            .map(w => w.word);
-        
-        const newChoices = [currentItem.word, ...distractorWords].sort(() => 0.5 - Math.random());
-        setShuffledChoices(newChoices);
-        setFeedback({ text: '', color: '' });
-        setShowDefinition(false);
-    }, [currentItem, lessonData.words]);
+            // Find the 1-indexed position of the correct answer
+            const correctAnswerIndex = allAnswers.indexOf(wordItem.word) + 1;
 
-    const handleAnswer = (selectedWord, theme) => {
-        if (showDefinition) return;
+            return {
+                question: wordItem.challengeSentence.replace('_______', '________'),
+                answers: allAnswers,
+                correctAnswer: correctAnswerIndex.toString(),
+                messageForCorrectAnswer: `Correct! "${wordItem.word}" is the right word for this context.`,
+                messageForIncorrectAnswer: `Not quite. The correct word is "${wordItem.word}".`
+            };
+        });
 
-        if (selectedWord === currentItem.word) {
-            setFeedback({ text: 'Correct!', color: theme.palette.success.main });
-            setShowDefinition(true);
-            setTimeout(() => {
-                const nextIndex = (currentIndex + 1) % lessonData.words.length;
-                setCurrentIndex(nextIndex);
-            }, 2500);
-        } else {
-            setFeedback({ text: 'Not quite, try again!', color: theme.palette.error.main });
-            setTimeout(() => setFeedback({ text: '', color: '' }), 1500);
-        }
-    };
+        return {
+            quizTitle: `Vocabulary Challenge: ${lessonData.lesson}`,
+            questions: questions
+        };
+    }, [lessonData]);
 
-    const sentenceHTML = currentItem.challengeSentence.replace('_______', `<u style="text-decoration-style: dotted;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>`);
-    
-    const buttonHTML = shuffledChoices.map(choice => `
-        <button
-            onclick="document.dispatchEvent(new CustomEvent('challengeAnswer', { detail: { word: '${choice}' } }))"
-            style="padding: 12px 24px; border-radius: 8px; border: 1px solid ${theme.palette.divider}; cursor: pointer; min-width: 150px; background-color: transparent; color: ${theme.palette.text.primary}; font-size: 1rem; transition: all 0.2s ease-in-out;"
-            onmouseover="this.style.backgroundColor='${theme.palette.action.hover}'; this.style.transform='scale(1.02)';"
-            onmouseout="this.style.backgroundColor='transparent'; this.style.transform='scale(1)';"
-        >${choice}</button>
-    `).join('');
-
-    const feedbackHTML = `<p style="margin-top: 2em; font-weight: bold; min-height: 24px; color: ${feedback.color};">${feedback.text}</p>`;
-    const definitionHTML = showDefinition ? `<p style="margin-top: 1em; font-size: 1.1em;"><strong>${currentItem.word}:</strong> ${currentItem.definition}</p>` : '';
-
-    useEffect(() => {
-        const eventListener = (event) => handleAnswer(event.detail.word, theme);
-        document.addEventListener('challengeAnswer', eventListener);
-        return () => document.removeEventListener('challengeAnswer', eventListener);
-    }, [shuffledChoices, currentIndex, theme]);
-
-    return (
-        <DetailCard content={`
-            <div style="text-align: center;">
-                <h3 style="font-size: 1.5em; font-weight: bold; margin-bottom: 1em;">Contextual Sentence Challenge</h3>
-                <p style="font-size: 1.2em; margin-bottom: 2em;"><em>${sentenceHTML}</em></p>
-                <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1em;">
-                    ${buttonHTML}
-                </div>
-                ${feedbackHTML}
-                ${definitionHTML}
-            </div>
-        `} />
-    );
+    return <QuizComponent quizData={quizData} />;
 };
 
 // --- Main Page Component ---
