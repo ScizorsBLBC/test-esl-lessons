@@ -908,3 +908,44 @@ esl-lessons/
 - **Automated Deployment**: GitHub Actions handles all deployment automatically
 - **Static Generation**: No server required - fully static site
 - **Automated Deployment**: GitHub Actions handles all deployment automatically
+
+## Guide: Migrating Changes from Test to Production
+
+This guide outlines the complete process for merging features and fixes from the `test-esl-lessons` repository into the main `ESL-Lessons` production repository.
+
+### Step 1: Prepare Your Local Environment
+
+Ensure both of your local repository folders are clean and up-to-date.
+
+1.  Navigate to your main production repository directory:
+    ```bash
+    cd /path/to/your/projects/ESL-Lessons
+    ```
+
+2.  Make sure you are on the `main` branch and have the latest changes from GitHub:
+    ```bash
+    git checkout main
+    git pull origin main
+    ```
+
+### Step 2: Link the Test Repository
+
+Temporarily link the `test-esl-lessons` repository to your main project using a Git "remote". This allows you to fetch its code and history.
+
+1.  From inside the `ESL-Lessons` directory, add the test repository as a remote named `test-repo`.
+    ```bash
+    # The path should be relative to your current location.
+    git remote add test-repo ../test-esl-lessons
+    ```
+
+2.  Fetch all the data from the test repository:
+    ```bash
+    git fetch test-repo
+    ```
+
+### Step 3: Create an Integration Branch
+
+Never work directly on your `main` branch. Create a new, temporary branch to handle the merge.
+
+```bash
+git checkout -b feature/integrate-test-refactor
